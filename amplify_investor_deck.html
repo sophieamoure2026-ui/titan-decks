@@ -1,0 +1,878 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Titan Signal AI Foundry — Investor Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #030711;
+  --bg2: #080f1f;
+  --gold: #f5a623;
+  --gold2: #ffd166;
+  --blue: #1e6fff;
+  --cyan: #06d6ff;
+  --green: #00e676;
+  --red: #ff4757;
+  --white: #ffffff;
+  --gray: #7a8aab;
+  --gray2: #4a5568;
+  --card: rgba(255,255,255,0.03);
+  --border: rgba(255,255,255,0.07);
+  --gold-border: rgba(245,166,35,0.25);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ── GRID BG ── */
+.grid-bg {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(30,111,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,111,255,0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+.noise {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+
+/* ── DECK ── */
+.deck { width: 100vw; height: 100vh; position: relative; z-index: 1; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  padding: 52px 80px;
+  opacity: 0; transform: translateY(30px) scale(0.98);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  pointer-events: none; overflow: hidden;
+}
+.slide.active { opacity:1; transform:none; pointer-events:all; }
+.slide.exit { opacity:0; transform: translateY(-30px) scale(0.98); }
+
+/* ── AMBIENT GLOWS ── */
+.glow {
+  position: absolute; border-radius: 50%;
+  filter: blur(150px); pointer-events: none;
+}
+.g1 { width:600px; height:600px; background:rgba(30,111,255,0.09); top:-150px; right:-150px; }
+.g2 { width:500px; height:500px; background:rgba(245,166,35,0.07); bottom:-100px; left:-100px; }
+.g3 { width:400px; height:400px; background:rgba(6,214,255,0.06); top:50%; left:50%; transform:translate(-50%,-50%); }
+
+/* ── TOP BAR ── */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 32px;
+  background: rgba(3,7,17,0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.logo-text {
+  font-size: 15px; font-weight: 800; letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #fff 0%, var(--gold) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.logo-sub { font-size: 11px; color: var(--gray); font-weight: 400; margin-top: 1px; }
+.topbar-right { display:flex; align-items:center; gap:20px; }
+.confidential-badge {
+  padding: 4px 12px; border-radius: 4px;
+  background: rgba(245,166,35,0.1);
+  border: 1px solid var(--gold-border);
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--gold);
+}
+.slide-label { font-size: 12px; color: var(--gray); }
+
+/* ── PROGRESS ── */
+.progress {
+  position: fixed; top: 0; left: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--cyan));
+  transition: width 0.5s ease; z-index: 100;
+}
+
+/* ── NAV ── */
+.nav {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 16px;
+  background: rgba(8,15,31,0.85);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  border-radius: 40px; padding: 10px 20px;
+  z-index: 50;
+}
+.nav-arrow {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent; color: white;
+  font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.nav-arrow:hover { background: var(--gold); border-color: var(--gold); color: #000; }
+.dots { display:flex; gap:6px; align-items:center; }
+.dot {
+  width:5px; height:5px; border-radius:50%;
+  background:var(--gray2); cursor:pointer;
+  transition: all 0.25s;
+}
+.dot.active { background:var(--gold); width:16px; border-radius:3px; }
+
+/* ── TYPOGRAPHY ── */
+.eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 14px; text-align: center;
+}
+.h1 {
+  font-size: clamp(44px, 5.5vw, 72px); font-weight: 900;
+  line-height: 1.05; text-align: center;
+  letter-spacing: -1px; margin-bottom: 16px;
+}
+.h1 .grad {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 50%, var(--cyan) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.h2 {
+  font-size: clamp(30px, 3.8vw, 48px); font-weight: 800;
+  line-height: 1.1; text-align: center; margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+.lead {
+  font-size: 18px; color: var(--gray); line-height: 1.65;
+  text-align: center; max-width: 640px; margin-bottom: 40px;
+}
+.lead strong { color: white; }
+
+/* ── CARDS ── */
+.grid { display: grid; gap: 14px; width: 100%; }
+.g2c { grid-template-columns: 1fr 1fr; }
+.g3c { grid-template-columns: repeat(3,1fr); }
+.g4c { grid-template-columns: repeat(4,1fr); }
+.g5c { grid-template-columns: repeat(5,1fr); }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 22px;
+  position: relative; overflow: hidden;
+  transition: all 0.25s;
+}
+.card::before {
+  content: ''; position: absolute; inset:0;
+  background: linear-gradient(135deg, rgba(245,166,35,0.04) 0%, transparent 60%);
+  border-radius: 14px;
+}
+.card:hover { border-color: var(--gold-border); transform: translateY(-2px); }
+.card-icon { font-size: 26px; margin-bottom: 10px; display: block; }
+.card-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: white; }
+.card-body { font-size: 12.5px; color: var(--gray); line-height: 1.55; }
+.card-highlight {
+  border-color: var(--gold-border);
+  background: linear-gradient(135deg, rgba(245,166,35,0.07) 0%, rgba(245,166,35,0.02) 100%);
+}
+
+/* ── METRIC CARDS ── */
+.metric {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px 18px; text-align: center;
+}
+.metric-num {
+  font-size: 38px; font-weight: 900; line-height: 1;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 6px;
+}
+.metric-label { font-size: 12px; color: var(--gray); }
+.metric-sub { font-size: 10px; color: var(--gray2); margin-top: 3px; }
+
+/* ── TABLE ── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table thead th {
+  font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--gray);
+  padding: 10px 16px; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.data-table tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.2s;
+}
+.data-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+.data-table tbody td {
+  padding: 13px 16px; color: var(--gray);
+  vertical-align: middle;
+}
+.data-table tbody td:first-child { color: white; font-weight: 600; }
+.badge {
+  display: inline-block; padding: 3px 10px;
+  border-radius: 100px; font-size: 10px; font-weight: 700;
+}
+.badge-green { background: rgba(0,230,118,0.1); color: var(--green); border: 1px solid rgba(0,230,118,0.2); }
+.badge-blue  { background: rgba(30,111,255,0.12); color: var(--cyan);  border: 1px solid rgba(6,214,255,0.2); }
+.badge-gold  { background: rgba(245,166,35,0.12); color: var(--gold); border: 1px solid var(--gold-border); }
+.badge-gray  { background: rgba(122,138,171,0.1); color: var(--gray); border: 1px solid rgba(122,138,171,0.2); }
+
+/* ── ASK BOX ── */
+.ask-box {
+  border: 1px solid var(--gold-border);
+  background: linear-gradient(135deg, rgba(245,166,35,0.1) 0%, rgba(245,166,35,0.04) 100%);
+  border-radius: 20px; padding: 40px 50px; text-align: center;
+  max-width: 760px; position: relative; overflow: hidden;
+}
+.ask-box::before {
+  content:''; position:absolute; top:-60%; left:-60%;
+  width:220%; height:220%;
+  background: radial-gradient(ellipse at center, rgba(245,166,35,0.07) 0%, transparent 65%);
+}
+.ask-amount {
+  font-size: clamp(56px, 6vw, 80px); font-weight: 900;
+  line-height: 1; letter-spacing: -2px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 6px;
+}
+.ask-detail { font-size: 15px; color: var(--gray); margin-bottom: 28px; }
+.ask-detail strong { color: white; }
+.ask-use-grid { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.use-chip {
+  padding: 8px 18px; border-radius: 100px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  font-size: 12px; font-weight: 600; color: var(--gray);
+}
+
+/* ── TIMELINE ── */
+.timeline { display: flex; width: 100%; max-width: 1000px; gap: 0; }
+.tl-item {
+  flex: 1; padding: 0 12px; position: relative; text-align: center;
+}
+.tl-item:not(:last-child)::after {
+  content: '→'; position: absolute;
+  right: -10px; top: 18px;
+  color: var(--gold); font-size: 18px; opacity: 0.5;
+}
+.tl-node {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 16px; color: #000;
+  margin: 0 auto 12px;
+}
+.tl-phase { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.tl-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.tl-body { font-size: 11.5px; color: var(--gray); line-height: 1.5; }
+.tl-tag {
+  display: inline-block; margin-top: 8px;
+  padding: 3px 10px; border-radius: 100px;
+  background: rgba(245,166,35,0.1); color: var(--gold);
+  font-size: 10px; font-weight: 700;
+  border: 1px solid var(--gold-border);
+}
+
+/* ── INNER ── */
+.inner { width:100%; max-width:1140px; display:flex; flex-direction:column; align-items:center; position:relative; z-index:1; }
+
+/* ── STREAM ROW ── */
+.stream-row {
+  display: flex; align-items: stretch;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 20px;
+  margin-bottom: 10px; gap: 20px;
+  transition: all 0.2s;
+}
+.stream-row:hover { border-color: var(--gold-border); }
+.stream-num {
+  font-size: 28px; font-weight: 900;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  min-width: 28px; flex-shrink: 0;
+}
+.stream-content { flex: 1; }
+.stream-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.stream-sub { font-size: 12px; color: var(--gray); }
+.stream-tag { flex-shrink: 0; display: flex; align-items: center; }
+
+/* ── MOAT ITEMS ── */
+.moat-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+.moat-icon { font-size: 24px; flex-shrink: 0; width: 44px; height: 44px; background: rgba(255,255,255,0.04); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+.moat-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.moat-sub { font-size: 12.5px; color: var(--gray); line-height: 1.5; }
+
+/* ── QUOTE ── */
+.quote-box {
+  background: linear-gradient(135deg, rgba(30,111,255,0.08), rgba(6,214,255,0.05));
+  border: 1px solid rgba(6,214,255,0.15);
+  border-radius: 14px; padding: 22px 28px;
+  margin-top: 16px; max-width: 900px;
+}
+.quote-text { font-size: 15px; font-style: italic; color: rgba(255,255,255,0.85); line-height: 1.6; }
+.quote-source { font-size: 12px; color: var(--cyan); margin-top: 8px; font-weight: 600; }
+
+/* ── HEADER SLIDE TAGLINE ── */
+.tagline-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 36px; }
+.tagline-chip { padding: 6px 16px; border-radius: 100px; border: 1px solid var(--border); font-size: 12px; color: var(--gray); background: rgba(255,255,255,0.04); }
+.tagline-chip.hot { border-color: var(--gold-border); color: var(--gold); background: rgba(245,166,35,0.07); }
+
+/* ── HERO METRICS ── */
+.hero-metrics { display: flex; gap: 0; margin-top: 10px; }
+.hm { text-align: center; padding: 16px 40px; }
+.hm-num { font-size: 38px; font-weight: 900; background: linear-gradient(135deg, var(--gold), var(--gold2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hm-label { font-size: 12px; color: var(--gray); margin-top: 3px; }
+.hm-div { width: 1px; background: var(--border); align-self: stretch; }
+
+/* ── PIE VISUAL ── */
+.pie-wrap {
+  position: relative; width: 160px; height: 160px;
+  margin: 0 auto;
+}
+.pie-wrap svg { transform: rotate(-90deg); }
+.pie-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.pie-big { font-size: 22px; font-weight: 900; color: var(--gold); }
+.pie-sm { font-size: 10px; color: var(--gray); margin-top: 2px; }
+
+/* ── MARKET SLIDE ── */
+.market-circle {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card);
+  text-align: center; position: relative;
+}
+.mc-num { font-size: 24px; font-weight: 900; color: var(--gold); }
+.mc-label { font-size: 10px; color: var(--gray); }
+
+</style>
+<style id="antigravity-scroll-lock-style">
+  html:root body.antigravity-scroll-lock {
+    overflow: hidden !important;
+  }
+</style><style>
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
+</style></head>
+<body class="">
+
+<div class="grid-bg"></div>
+<div class="noise"></div>
+<div class="progress" id="prog" style="width: 10%;"></div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div>
+    <div class="logo-text">TITAN SIGNAL</div>
+    <div class="logo-sub">AI Foundry — Series A Investment</div>
+  </div>
+  <div class="topbar-right">
+    <div class="confidential-badge">🔒 Confidential</div>
+    <div class="slide-label" id="topLabel">Slide 1 of 10</div>
+  </div>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- ═══ SLIDE 1: HERO ═══ -->
+<div class="slide active" id="s0">
+  <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+  <div class="inner" style="text-align:center;">
+    <div class="eyebrow">🚀 Series A · Investor Presentation · March 2026</div>
+    <h1 class="h1">The World's First<br><span class="grad">Autonomous AI Foundry</span></h1>
+    <p class="lead">A self-sustaining factory that researches trends, builds AI products, and sells them at scale — <strong>without human intervention.</strong></p>
+    <div class="tagline-row">
+      <span class="tagline-chip hot">⚡ 230+ Production Daemons</span>
+      <span class="tagline-chip hot">💰 5 Revenue Streams</span>
+      <span class="tagline-chip hot">🌐 33 Mobile Apps Live</span>
+      <span class="tagline-chip">$120M Current Valuation</span>
+      <span class="tagline-chip">David Lempert Pipeline</span>
+    </div>
+    <div class="hero-metrics">
+      <div class="hm"><div class="hm-num">$12.5M</div><div class="hm-label">Raise Amount</div></div>
+      <div class="hm-div"></div>
+      <div class="hm"><div class="hm-num">$125M</div><div class="hm-label">Post-Money Valuation</div></div>
+      <div class="hm-div"></div>
+      <div class="hm"><div class="hm-num">10%</div><div class="hm-label">Equity Offered</div></div>
+      <div class="hm-div"></div>
+      <div class="hm"><div class="hm-num">Q4 '26</div><div class="hm-label">Target $10M+ ARR</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 2: THE PROBLEM ═══ -->
+<div class="slide" id="s1">
+  <div class="glow g1"></div><div class="glow g2"></div>
+  <div class="inner">
+    <div class="eyebrow">The Problem</div>
+    <h2 class="h2">The AI Economy Has a<br>Production Bottleneck</h2>
+    <p class="lead" style="margin-bottom:28px;">Everyone wants AI products. Nobody has the infrastructure to produce them at scale, at speed, across multiple verticals simultaneously.</p>
+    <div class="grid g3c" style="max-width:1050px;">
+      <div class="card">
+        <span class="card-icon">🐢</span>
+        <div class="card-title">Slow Build Cycles</div>
+        <div class="card-body">Traditional AI product development takes 12–18 months per vertical. Markets move in weeks. By launch, the opportunity is gone.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">💸</span>
+        <div class="card-title">Capital-Intensive Teams</div>
+        <div class="card-body">Running R&amp;D, engineering, sales, and ops across 5 verticals requires $5M+ in headcount annually. Margins collapse before scale is reached.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📉</span>
+        <div class="card-title">Single-Stream Risk</div>
+        <div class="card-body">99% of AI startups are a one-trick pony. One regulatory change, one market shift, or one competitor kills the entire business. Zero redundancy.</div>
+      </div>
+    </div>
+    <div class="quote-box" style="margin-top:22px;">
+      <div class="quote-text">"The next stage of AI isn't about building one product — it's about building the factory that builds all the products."</div>
+      <div class="quote-source">— Titan Signal Investment Thesis, 2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 3: THE SOLUTION ═══ -->
+<div class="slide" id="s2">
+  <div class="glow g2"></div><div class="glow g3"></div>
+  <div class="inner">
+    <div class="eyebrow">The Solution</div>
+    <h2 class="h2">Titan Signal: AI Foundry</h2>
+    <p class="lead" style="margin-bottom:28px;">An autonomous, self-reinforcing production engine with <strong>230+ AI daemons</strong> operating across R&amp;D, manufacturing, sales, and security — 24/7, zero downtime.</p>
+    <div class="grid g4c" style="max-width:1100px; margin-bottom:20px;">
+      <div class="card card-highlight">
+        <span class="card-icon">🔬</span>
+        <div class="card-title">R&amp;D Intelligence</div>
+        <div class="card-body">11 AI analyst daemons scan global trends, earnings, and market signals — surfacing opportunities before humans can.</div>
+      </div>
+      <div class="card card-highlight">
+        <span class="card-icon">🏭</span>
+        <div class="card-title">Mobile Factory</div>
+        <div class="card-body">Groq LLM scaffolds full React Native apps in hours. 33 apps already live on Google Play. Wave 1 market dominance.</div>
+      </div>
+      <div class="card card-highlight">
+        <span class="card-icon">📡</span>
+        <div class="card-title">Sales Engine</div>
+        <div class="card-body">Industrial-scale lead harvesting, AI call center, BANT IVR, SMS drips — fully autonomous B2B outbound machine.</div>
+      </div>
+      <div class="card card-highlight">
+        <span class="card-icon">🛡️</span>
+        <div class="card-title">Defense Grid</div>
+        <div class="card-body">6-guard Defense Army, 10-unit IP Militia, DEFCON sensors, Darwinian Respawn — military-grade autonomous security.</div>
+      </div>
+    </div>
+    <div class="grid g3c" style="max-width:1100px;">
+      <div class="metric"><div class="metric-num">230+</div><div class="metric-label">Production Daemons Running</div><div class="metric-sub">24/7, Zero Human Oversight</div></div>
+      <div class="metric"><div class="metric-num">~0</div><div class="metric-label">Marginal Cost Per New Vertical</div><div class="metric-sub">Distribution Layer Already Built</div></div>
+      <div class="metric"><div class="metric-num">90s</div><div class="metric-label">Capital Recycling Cycle</div><div class="metric-sub">95% Kelly Sizing Algo</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 4: MARKET SIZE ═══ -->
+<div class="slide" id="s3">
+  <div class="glow g1"></div><div class="glow g3"></div>
+  <div class="inner">
+    <div class="eyebrow">Market Opportunity</div>
+    <h2 class="h2">An Ocean of Addressable Revenue</h2>
+    <p class="lead" style="margin-bottom:28px;">Titan operates across 5 high-growth markets simultaneously, enabling correlated upside with non-correlated downside protection.</p>
+    <div class="grid g2c" style="max-width:1050px;">
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div class="stream-row">
+          <div class="stream-num">1</div>
+          <div class="stream-content">
+            <div class="stream-title">Algorithmic Crypto Trading</div>
+            <div class="stream-sub">$3.5T daily volume · $500B quant market · 24/7 automated PnL</div>
+          </div>
+          <div class="stream-tag"><span class="badge badge-green">High Upside</span></div>
+        </div>
+        <div class="stream-row">
+          <div class="stream-num">2</div>
+          <div class="stream-content">
+            <div class="stream-title">B2B Lead Intelligence (Apex)</div>
+            <div class="stream-sub">$1.50–$5/lead · Industrial harvesting · Counter-cyclical hedge</div>
+          </div>
+          <div class="stream-tag"><span class="badge badge-gold">Hedge</span></div>
+        </div>
+        <div class="stream-row">
+          <div class="stream-num">3</div>
+          <div class="stream-content">
+            <div class="stream-title">SaaS Subscriptions</div>
+            <div class="stream-sub">$97–$497/mo · Retail Light Terminal &amp; Founders Key</div>
+          </div>
+          <div class="stream-tag"><span class="badge badge-blue">Recurring</span></div>
+        </div>
+        <div class="stream-row">
+          <div class="stream-num">4</div>
+          <div class="stream-content">
+            <div class="stream-title">iGaming &amp; Affiliate</div>
+            <div class="stream-sub">CPA revenue · B2B licensing · Relationship correlated</div>
+          </div>
+          <div class="stream-tag"><span class="badge badge-gray">Stable</span></div>
+        </div>
+        <div class="stream-row">
+          <div class="stream-num">5</div>
+          <div class="stream-content">
+            <div class="stream-title">Mobile App Factory</div>
+            <div class="stream-sub">33 apps live · Wave 1 markets · Ads + IAP + B2B white-label</div>
+          </div>
+          <div class="stream-tag"><span class="badge badge-green">Scaling</span></div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px; justify-content:center;">
+        <div class="card card-highlight" style="text-align:center;">
+          <div class="metric-num" style="font-size:48px; margin-bottom:6px;">5×</div>
+          <div class="card-title" style="text-align:center; margin-bottom:8px;">Revenue Redundancy</div>
+          <div class="card-body" style="text-align:center;">No single stream exceeds 30% of total revenue. When markets crash, Lead &amp; Mobile revenue surges — <strong style="color:white;">structural floor built-in.</strong></div>
+        </div>
+        <div class="grid g2c" style="gap:10px;">
+          <div class="metric"><div class="metric-num" style="font-size:28px;">UAE</div><div class="metric-label">Nigeria · India</div><div class="metric-sub">Wave 1 Priority Markets</div></div>
+          <div class="metric"><div class="metric-num" style="font-size:28px;">$2k</div><div class="metric-label">Max Lead Price</div><div class="metric-sub">India: 1B+ user addressable</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 5: TRACTION ═══ -->
+<div class="slide" id="s4">
+  <div class="glow g2"></div><div class="glow g1"></div>
+  <div class="inner">
+    <div class="eyebrow">Traction &amp; Proof Points</div>
+    <h2 class="h2">Already Operational. Already Scaling.</h2>
+    <p class="lead" style="margin-bottom:28px;">This is not a pre-revenue story. The foundry is <strong>live in production</strong> with measurable, growing outputs across all 5 streams.</p>
+    <div class="grid g4c" style="max-width:1100px; margin-bottom:18px;">
+      <div class="metric">
+        <div class="metric-num">230+</div>
+        <div class="metric-label">Live AI Services</div>
+        <div class="metric-sub">VPS-1 production fleet</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">33</div>
+        <div class="metric-label">Mobile Apps Published</div>
+        <div class="metric-sub">Google Play Store, March 2026</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">23+</div>
+        <div class="metric-label">Trading Asset Pairs</div>
+        <div class="metric-sub">Coinbase Spot + IBKR Options</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">51</div>
+        <div class="metric-label">VC Firms in Pipeline</div>
+        <div class="metric-sub">David Lempert outreach active</div>
+      </div>
+    </div>
+    <div class="grid g3c" style="max-width:1100px;">
+      <div class="card">
+        <span class="card-icon">⚡</span>
+        <div class="card-title">HyperScalper Live</div>
+        <div class="card-body">GC1 signal-driven market orders executing on Coinbase with 95% Kelly sizing. 5-day 2× capital compounding strategy active. Auto-respawn on drawdown.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📱</span>
+        <div class="card-title">Mobile Factory Deployed</div>
+        <div class="card-body">Groq-powered scaffolding building React Native apps for iGaming, Expat, Tax, and Remittance verticals. 33 on Play Store as of March 2026.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔒</span>
+        <div class="card-title">Zero-Trust Security Online</div>
+        <div class="card-body">Project Overwatch running 24/7. Automated fail2ban recovery, DEFCON sensors, Darwinian Respawn, and Space Sentinel (LEO) integration operational.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 6: MOAT ═══ -->
+<div class="slide" id="s5">
+  <div class="glow g1"></div><div class="glow g3"></div>
+  <div class="inner">
+    <div class="eyebrow">Competitive Moat</div>
+    <h2 class="h2">Why This Can't Be Replicated</h2>
+    <p class="lead" style="margin-bottom:24px;">The moat is not a single feature — it's the <strong>compounding integration</strong> of 4 proprietary systems that took 18 months to build.</p>
+    <div class="grid g2c" style="max-width:1050px;">
+      <div>
+        <div class="moat-item">
+          <div class="moat-icon">🧬</div>
+          <div><div class="moat-title">Darwinian Respawn Engine</div><div class="moat-sub">Services that fail are automatically replaced with improved variants — a self-evolving production system that no incumbent can copy without years of infrastructure investment.</div></div>
+        </div>
+        <div class="moat-item">
+          <div class="moat-icon">🌊</div>
+          <div><div class="moat-title">Wave 1 Market Capture</div><div class="moat-sub">AI adoption velocity data (Karp Model) identifies fastest-adopting nations (Nigeria, India, UAE) before competitors. First-mover distribution is being locked in now.</div></div>
+        </div>
+        <div class="moat-item">
+          <div class="moat-icon">🧬</div>
+          <div><div class="moat-title">Atlas Command Center</div><div class="moat-sub">God-mode telemetry engine with real-time PnL, treasury data, and fleet health APIs — a proprietary operating system for autonomous AI businesses.</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="moat-item">
+          <div class="moat-icon">💎</div>
+          <div><div class="moat-title">Zero Marginal Cost Expansion</div><div class="moat-sub">Adding a new vertical (new country, new product category) requires only R&amp;D intelligence input. The build, sell, and deliver layers are already built and running.</div></div>
+        </div>
+        <div class="moat-item">
+          <div class="moat-icon">🛡️</div>
+          <div><div class="moat-title">Military-Grade Cybersecurity</div><div class="moat-sub">6 autonomous security guardians, 10-unit IP Militia, undersea/seismic/atmospheric sensors, and active minefield defense — protecting $XX in managed assets.</div></div>
+        </div>
+        <div class="moat-item">
+          <div class="moat-icon">📊</div>
+          <div><div class="moat-title">Proprietary Data Loop</div><div class="moat-sub">Every harvested lead, every trading signal, every content piece feeds back into the intelligence layer — creating a compounding data flywheel competitors cannot access.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 7: BUSINESS MODEL ═══ -->
+<div class="slide" id="s6">
+  <div class="glow g2"></div><div class="glow g3"></div>
+  <div class="inner">
+    <div class="eyebrow">Business Model</div>
+    <h2 class="h2">High-Margin, Multi-Layer Monetization</h2>
+    <p class="lead" style="margin-bottom:24px;">Every output of the AI Foundry is a revenue event. Lead sold, trade executed, app downloaded, subscription renewed — <strong>all automated.</strong></p>
+    <div style="width:100%; max-width:1050px; overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Revenue Stream</th>
+            <th>Product</th>
+            <th>Price Point</th>
+            <th>Margin</th>
+            <th>Cycle</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🤖 Algo Trading</td>
+            <td>HyperScalper + 23-asset swarm</td>
+            <td>Performance %</td>
+            <td>~90%+</td>
+            <td>24/7 continuous</td>
+            <td><span class="badge badge-green">Live</span></td>
+          </tr>
+          <tr>
+            <td>📊 Lead Intelligence</td>
+            <td>Apex Leads Pro marketplace</td>
+            <td>$1.50–$2,000/lead</td>
+            <td>~95%</td>
+            <td>Per transaction</td>
+            <td><span class="badge badge-green">Live</span></td>
+          </tr>
+          <tr>
+            <td>💳 SaaS Subscriptions</td>
+            <td>Retail Light · Founders Key</td>
+            <td>$97–$497/mo</td>
+            <td>~85%</td>
+            <td>Monthly recurring</td>
+            <td><span class="badge badge-blue">Scaling</span></td>
+          </tr>
+          <tr>
+            <td>🎰 iGaming &amp; Affiliate</td>
+            <td>PWA apps + CPA licensing</td>
+            <td>CPA + Rev-share</td>
+            <td>~80%</td>
+            <td>Per acquisition</td>
+            <td><span class="badge badge-green">Live</span></td>
+          </tr>
+          <tr>
+            <td>📱 Mobile App Factory</td>
+            <td>33 Play Store apps</td>
+            <td>Ads + IAP + B2B</td>
+            <td>~75%</td>
+            <td>Passive + Per-sale</td>
+            <td><span class="badge badge-blue">Scaling</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="quote-box" style="margin-top:16px;">
+      <div class="quote-text">Redundancy Multiplier: 5× diversity ensures no single stream exceeds 30% of total revenue. The system "carries the floor" even during deep market drawdowns through inverse correlation between Trading PnL and Lead/Mobile Sales.</div>
+      <div class="quote-source">Titan Signal Financial Valuation Model</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 8: FINANCIALS ═══ -->
+<div class="slide" id="s7">
+  <div class="glow g1"></div><div class="glow g2"></div>
+  <div class="inner">
+    <div class="eyebrow">Financial Projections</div>
+    <h2 class="h2">Path to $10M ARR — Q4 2026</h2>
+    <p class="lead" style="margin-bottom:24px;">With the raise, Titan accelerates fleet expansion to <strong>100+ asset pairs</strong>, enterprise sales deployment, and Wave 1 mobile market domination.</p>
+    <div class="grid g4c" style="max-width:1100px; margin-bottom:18px;">
+      <div class="metric"><div class="metric-num">$125M</div><div class="metric-label">Post-Money Valuation</div><div class="metric-sub">Current trajectory</div></div>
+      <div class="metric"><div class="metric-num">$10M+</div><div class="metric-label">Target ARR by Q4 '26</div><div class="metric-sub">Upon full deployment</div></div>
+      <div class="metric"><div class="metric-num">~95%</div><div class="metric-label">Gross Margin</div><div class="metric-sub">Near-zero marginal cost model</div></div>
+      <div class="metric"><div class="metric-num">12.5×</div><div class="metric-label">Revenue Multiple at Exit</div><div class="metric-sub">Conservative SaaS comp</div></div>
+    </div>
+    <div class="grid g3c" style="max-width:1100px;">
+      <div class="card">
+        <span class="card-icon">📈</span>
+        <div class="card-title">Use of Funds: Fleet Expansion</div>
+        <div class="card-body"><strong style="color:var(--gold);">40% — $5M</strong><br>Scale trading fleet from 23 to 100+ asset pairs. Coinbase Spot + IBKR Options + Solana on-chain vaults. Deploy Flash Loan and Darwinian Executioner modules.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🚀</span>
+        <div class="card-title">Use of Funds: Sales Scale</div>
+        <div class="card-body"><strong style="color:var(--gold);">35% — $4.4M</strong><br>Deploy Mercenary Sales Force (50+ influencers), enterprise BANT call center, Apex Leads Pro marketplace, and institutional B2B signal API distribution.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌍</span>
+        <div class="card-title">Use of Funds: Wave 1 Capture</div>
+        <div class="card-body"><strong style="color:var(--gold);">25% — $3.1M</strong><br>Accelerate Mobile Factory output to 200+ apps. Offline distribution nodes in UAE, India, Nigeria. Establish Blue Zone Domination in all 3 Wave 1 markets.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 9: ROADMAP ═══ -->
+<div class="slide" id="s8">
+  <div class="glow g3"></div><div class="glow g1"></div>
+  <div class="inner">
+    <div class="eyebrow">Execution Roadmap</div>
+    <h2 class="h2">From Foundry to Empire</h2>
+    <p class="lead" style="margin-bottom:32px;">A phased rollout that maximizes capital efficiency while continuously compounding across all 5 revenue streams.</p>
+    <div class="timeline" style="margin-bottom:30px;">
+      <div class="tl-item">
+        <div class="tl-node">Q2</div>
+        <div class="tl-phase">Q2 2026</div>
+        <div class="tl-title">Foundation Lock</div>
+        <div class="tl-body">Close Series A · Deploy fleet to 50 asset pairs · Launch Apex enterprise tier · Wave 1 pilot (UAE)</div>
+        <div class="tl-tag">Funded</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-node">Q3</div>
+        <div class="tl-phase">Q3 2026</div>
+        <div class="tl-title">Scale Ignition</div>
+        <div class="tl-body">100+ asset pairs · 100 mobile apps · IBKR Options live · Mercenary Sales Force deployed</div>
+        <div class="tl-tag">$3M ARR Est.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-node">Q4</div>
+        <div class="tl-phase">Q4 2026</div>
+        <div class="tl-title">Revenue Milestone</div>
+        <div class="tl-body">$10M ARR target · Flash Loans live · India + Nigeria Blue Zone · Solana vaults operational</div>
+        <div class="tl-tag">$10M ARR</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-node">28</div>
+        <div class="tl-phase">2027–2028</div>
+        <div class="tl-title">Exit Horizon</div>
+        <div class="tl-body">$50M+ ARR · Series B or strategic acquisition · Global AI Foundry licensing model</div>
+        <div class="tl-tag">$500M+ Exit</div>
+      </div>
+    </div>
+    <div class="grid g3c" style="max-width:1100px;">
+      <div class="card"><span class="card-icon">🎯</span><div class="card-title">Phase 89–90 (Imm.)</div><div class="card-body">Flash Loans, on-chain Solana vaults, Darwinian Executioner system — the highest-leverage trading modules currently in final testing.</div></div>
+      <div class="card"><span class="card-icon">🌐</span><div class="card-title">Offshore Arbitrage Mesh</div><div class="card-body">Zero-tax relay architecture across global tax havens — institutional vault management for maximum capital efficiency at scale.</div></div>
+      <div class="card"><span class="card-icon">🏛️</span><div class="card-title">Pacific Bay Advisors</div><div class="card-body">Parallel entity formation strategy (WY domestication) — the legal and financial architecture for institutional capital management and compliance.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 10: THE ASK ═══ -->
+<div class="slide" id="s9">
+  <div class="glow g1" style="width:700px;height:700px;top:-200px;right:-200px;background:rgba(245,166,35,0.12);"></div>
+  <div class="glow g2"></div>
+  <div class="inner" style="text-align:center; align-items:center;">
+    <div class="eyebrow">The Ask · Series A</div>
+    <div class="ask-box">
+      <div class="ask-amount">$12.5M</div>
+      <div class="ask-detail">at <strong>$125M post-money valuation</strong> · 10% equity · Series A round</div>
+      <div class="ask-detail" style="margin-bottom:28px; font-size:13px;">Lead investor preferred · Pro-rata rights available · Board observer seat offered</div>
+      <div class="ask-use-grid">
+        <div class="use-chip">⚡ 40% Fleet Expansion</div>
+        <div class="use-chip">📡 35% Sales Scale</div>
+        <div class="use-chip">🌍 25% Wave 1 Markets</div>
+      </div>
+    </div>
+    <div style="display:flex; gap:40px; margin-top:36px; align-items:center; justify-content:center;">
+      <div style="text-align:center;">
+        <div style="font-size:11px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">Contact</div>
+        <div style="font-size:15px; font-weight:700; color:white;">Gary Chen — Founder &amp; CEO</div>
+        <div style="font-size:13px; color:var(--gray); margin-top:2px;">Titan Signal AI Foundry</div>
+      </div>
+      <div style="width:1px; height:50px; background:var(--border);"></div>
+      <div style="text-align:center;">
+        <div style="font-size:11px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">Introduced by</div>
+        <div style="font-size:15px; font-weight:700; color:white;">David Lempert</div>
+        <div style="font-size:13px; color:var(--gray); margin-top:2px;">Strategic Investor Pipeline</div>
+      </div>
+      <div style="width:1px; height:50px; background:var(--border);"></div>
+      <div style="text-align:center;">
+        <div style="font-size:11px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">Platform</div>
+        <div style="font-size:15px; font-weight:700; color:var(--gold);">titan-signal.io</div>
+        <div style="font-size:13px; color:var(--gray); margin-top:2px;">Full diligence room available</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<nav class="nav">
+  <button class="nav-arrow" onclick="prev()">←</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-arrow" onclick="next()">→</button>
+</nav>
+
+<script>
+const TOTAL = 10;
+let cur = 0;
+
+function buildDots(){
+  const c = document.getElementById('dots');
+  c.innerHTML = '';
+  for(let i=0;i<TOTAL;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i===0?' active':'');
+    d.onclick=()=>go(i);
+    c.appendChild(d);
+  }
+}
+
+function ui(){
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+  document.getElementById('topLabel').textContent=`Slide ${cur+1} of ${TOTAL}`;
+  document.getElementById('prog').style.width=`${((cur+1)/TOTAL)*100}%`;
+}
+
+function go(n){
+  const slides=document.querySelectorAll('.slide');
+  slides[cur].classList.remove('active'); slides[cur].classList.add('exit');
+  setTimeout(()=>{ slides.forEach(s=>s.classList.remove('exit')); },600);
+  cur=n; slides[cur].classList.add('active'); ui();
+}
+function next(){ if(cur<TOTAL-1) go(cur+1); }
+function prev(){ if(cur>0) go(cur-1); }
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') next();
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') prev();
+});
+
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;});
+document.addEventListener('touchend',e=>{
+  const d=e.changedTouches[0].clientX-tx;
+  if(d<-50) next(); if(d>50) prev();
+});
+
+buildDots(); ui();
+</script>
+
+
+<div id="preact-border-shadow-host" popover="manual" style="border: none; padding: 0px; margin: 0px; inset: 0px; position: fixed; width: 100vw; height: 100vh; background: transparent; pointer-events: none;"></div></body></html>

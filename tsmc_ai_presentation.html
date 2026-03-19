@@ -1,0 +1,1045 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI for Sales &amp; BD | TSMC | Titan Signal AI Foundry</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Noto+Sans+TC:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #050d1a;
+    --navy2: #0a1628;
+    --blue: #1a6aff;
+    --cyan: #00c8ff;
+    --teal: #00e5c8;
+    --gold: #f0b429;
+    --white: #ffffff;
+    --gray: #8a9ab5;
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(0,200,255,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', 'Noto Sans TC', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* DECK CONTAINER */
+  .deck { width: 100vw; height: 100vh; position: relative; }
+
+  /* SLIDES */
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: all 0.6s cubic-bezier(0.4,0,0.2,1);
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+  .slide.exit {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  /* BACKGROUND ELEMENTS */
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,200,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,200,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .bg-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+  }
+  .glow-1 { width: 500px; height: 500px; background: rgba(26,106,255,0.12); top: -100px; right: -100px; }
+  .glow-2 { width: 400px; height: 400px; background: rgba(0,229,200,0.08); bottom: -100px; left: -50px; }
+
+  /* LANGUAGE TOGGLE */
+  .lang-toggle {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 100;
+    display: flex;
+    gap: 2px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 4px;
+  }
+  .lang-btn {
+    padding: 6px 16px;
+    border: none;
+    background: transparent;
+    color: var(--gray);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lang-btn.active {
+    background: var(--blue);
+    color: white;
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 100;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 50px;
+    padding: 12px 24px;
+  }
+  .nav-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover { background: var(--blue); border-color: var(--blue); }
+  .slide-counter { font-size: 13px; color: var(--gray); font-weight: 500; min-width: 60px; text-align: center; }
+
+  .dots {
+    display: flex; gap: 8px; align-items: center;
+  }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gray);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .dot.active { background: var(--cyan); width: 18px; border-radius: 3px; }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    transition: width 0.5s ease;
+    z-index: 100;
+  }
+
+  /* SLIDE 1 — HERO */
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(0,200,255,0.1);
+    border: 1px solid rgba(0,200,255,0.3);
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cyan);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero-title {
+    font-size: clamp(42px, 5vw, 64px);
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: center;
+    max-width: 820px;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-title .accent { background: linear-gradient(135deg, var(--cyan), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-subtitle {
+    font-size: 18px;
+    color: var(--gray);
+    text-align: center;
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .hero-subtitle-zh {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 16px;
+    color: rgba(138,154,181,0.7);
+    text-align: center;
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 16px;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 32px; font-weight: 800; color: var(--cyan); }
+  .stat-label { font-size: 12px; color: var(--gray); margin-top: 4px; }
+  .stat-label-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 11px; color: rgba(138,154,181,0.6); }
+  .stat-divider { width: 1px; background: rgba(255,255,255,0.08); }
+
+  /* SECTION HEADER */
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .section-title {
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+  .section-title-zh {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: clamp(20px, 2.5vw, 30px);
+    font-weight: 700;
+    text-align: center;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 40px;
+  }
+
+  /* CARDS GRID */
+  .cards-grid {
+    display: grid;
+    gap: 16px;
+    width: 100%;
+    max-width: 1100px;
+  }
+  .cards-grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .cards-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .cards-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,200,255,0.05) 0%, transparent 60%);
+    border-radius: 16px;
+  }
+  .card:hover { border-color: rgba(0,200,255,0.4); transform: translateY(-3px); }
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: white;
+  }
+  .card-title-zh {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cyan);
+    margin-bottom: 10px;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.55;
+  }
+  .card-desc-zh {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 12px;
+    color: rgba(138,154,181,0.7);
+    line-height: 1.7;
+    margin-top: 6px;
+  }
+
+  /* METRIC CARD */
+  .metric-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .metric-num {
+    font-size: 40px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .metric-label { font-size: 13px; color: var(--gray); }
+  .metric-label-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: rgba(138,154,181,0.6); margin-top: 4px; }
+
+  /* PROCESS STEPS */
+  .process-steps {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    max-width: 1100px;
+    position: relative;
+  }
+  .process-step {
+    flex: 1;
+    text-align: center;
+    padding: 0 16px;
+    position: relative;
+  }
+  .process-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 22px;
+    color: var(--cyan);
+    font-size: 20px;
+  }
+  .step-num {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 18px;
+    margin: 0 auto 14px;
+  }
+  .step-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .step-label-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: var(--cyan); margin-bottom: 8px; }
+  .step-desc { font-size: 12px; color: var(--gray); line-height: 1.5; }
+  .step-desc-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 11px; color: rgba(138,154,181,0.6); line-height: 1.6; margin-top: 4px; }
+
+  /* CTA SLIDE */
+  .cta-box {
+    background: linear-gradient(135deg, rgba(26,106,255,0.15), rgba(0,229,200,0.1));
+    border: 1px solid rgba(0,200,255,0.3);
+    border-radius: 24px;
+    padding: 48px 64px;
+    text-align: center;
+    max-width: 800px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at center, rgba(0,200,255,0.06) 0%, transparent 70%);
+  }
+  .cta-title { font-size: 36px; font-weight: 800; margin-bottom: 8px; }
+  .cta-title-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 26px; color: var(--cyan); margin-bottom: 20px; }
+  .cta-subtitle { font-size: 16px; color: var(--gray); line-height: 1.6; margin-bottom: 8px; }
+  .cta-subtitle-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 14px; color: rgba(138,154,181,0.7); margin-bottom: 32px; }
+  .cta-btn {
+    display: inline-block;
+    padding: 14px 40px;
+    background: linear-gradient(135deg, var(--blue), var(--cyan));
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 8px 32px rgba(0,200,255,0.3);
+  }
+
+  /* WIDE SLIDE LAYOUT */
+  .slide-inner {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* TWO-COL */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    width: 100%;
+    max-width: 1100px;
+  }
+  .col-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .col-title-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 16px; color: var(--cyan); margin-bottom: 20px; }
+
+  /* PAIN POINT ROW */
+  .pain-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .pain-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .pain-text { flex: 1; }
+  .pain-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .pain-title-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: var(--cyan); margin-bottom: 4px; }
+  .pain-desc { font-size: 12px; color: var(--gray); line-height: 1.5; }
+
+  /* SOLUTION ARROW */
+  .solution-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: var(--cyan);
+    margin: 0 8px;
+  }
+
+  /* COMPANY SLIDE */
+  .titan-logo-text {
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+  }
+  .company-tag { font-size: 12px; color: var(--gray); margin-bottom: 32px; }
+
+  /* ROADMAP */
+  .roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 900px;
+  }
+  .roadmap-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+  }
+  .roadmap-phase {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--cyan);
+    min-width: 80px;
+  }
+  .roadmap-line { width: 1px; height: 30px; background: rgba(255,255,255,0.1); }
+  .roadmap-content { flex: 1; }
+  .roadmap-title { font-size: 14px; font-weight: 700; }
+  .roadmap-title-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: var(--cyan); }
+  .roadmap-desc { font-size: 12px; color: var(--gray); }
+  .roadmap-tag {
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 11px; font-weight: 600;
+    background: rgba(0,200,255,0.1);
+    color: var(--cyan);
+    border: 1px solid rgba(0,200,255,0.2);
+  }
+
+  /* WATERMARK */
+  .watermark {
+    position: fixed;
+    bottom: 90px;
+    right: 24px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.15);
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+
+  /* LANG-EN / LANG-ZH VISIBILITY */
+  body.zh-mode .en-only { display: none !important; }
+  body.zh-mode .zh-only { display: block !important; }
+  body:not(.zh-mode) .zh-only { display: none !important; }
+
+  /* SLIDE-specific subtitle zh shown underneath en always */
+  .zh-sub { display: block; }
+
+</style>
+<style id="antigravity-scroll-lock-style">
+  html:root body.antigravity-scroll-lock {
+    overflow: hidden !important;
+  }
+</style><style>
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
+</style></head>
+<body class="">
+
+<div class="progress-bar" id="progressBar" style="width: 12.5%;"></div>
+
+<!-- Language Toggle -->
+<div class="lang-toggle">
+  <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" id="btnZH" onclick="setLang('zh')">繁中</button>
+</div>
+
+<div class="watermark">TITAN SIGNAL AI FOUNDRY — CONFIDENTIAL</div>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <button class="nav-btn" onclick="prevSlide()">←</button>
+  <div class="dots" id="dots"></div>
+  <span class="slide-counter" id="counter">1 / 8</span>
+  <button class="nav-btn" onclick="nextSlide()">→</button>
+</nav>
+
+<div class="deck" id="deck">
+
+  <!-- ═══════════════ SLIDE 1: HERO ═══════════════ -->
+  <div class="slide active" id="slide-0">
+    <div class="bg-grid"></div>
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="slide-inner" style="align-items:center; text-align:center;">
+      <div class="hero-badge">🤖 Titan Signal AI Foundry &nbsp;×&nbsp; TSMC Sales &amp; BD</div>
+      <h1 class="hero-title">
+        <span class="accent">AI-Powered</span> Sales &amp;<br>Business Development
+      </h1>
+      <p class="hero-subtitle">Redefining how TSMC closes deals, manages relationships, and captures market intelligence at scale.</p>
+      <p class="hero-subtitle-zh zh-sub">重新定義台積電如何完成交易、管理客戶關係，並大規模掌握市場情報。</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">3×</div>
+          <div class="stat-label">Faster Deal Velocity</div>
+          <div class="stat-label-zh zh-sub">成交速度提升</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <div class="stat-num">60%</div>
+          <div class="stat-label">Reduction in Manual Research</div>
+          <div class="stat-label-zh zh-sub">減少人工研究時間</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">AI Intelligence Coverage</div>
+          <div class="stat-label-zh zh-sub">全天候 AI 情報覆蓋</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SLIDE 2: THE CHALLENGE ═══════════════ -->
+  <div class="slide" id="slide-1">
+    <div class="bg-grid"></div>
+    <div class="bg-glow glow-1"></div>
+    <div class="slide-inner">
+      <div class="section-eyebrow">The Challenge · 挑戰</div>
+      <h2 class="section-title">Sales &amp; BD Teams Are<br>Drowning in Complexity</h2>
+      <p class="section-title-zh zh-sub">業務與商業發展團隊面臨的核心挑戰</p>
+      <div class="two-col">
+        <div>
+          <div class="pain-row">
+            <span class="pain-icon">📊</span>
+            <div class="pain-text">
+              <div class="pain-title">Data Overload</div>
+              <div class="pain-title-zh zh-sub">數據超載</div>
+              <div class="pain-desc">Sales teams spend 65% of time on non-selling activities — data entry, research, reporting.</div>
+            </div>
+          </div>
+          <div class="pain-row">
+            <span class="pain-icon">🌏</span>
+            <div class="pain-text">
+              <div class="pain-title">Global Account Complexity</div>
+              <div class="pain-title-zh zh-sub">全球客戶管理複雜度</div>
+              <div class="pain-desc">Managing Apple, Nvidia, AMD, Qualcomm — each with unique roadmaps, timelines, and stakeholders.</div>
+            </div>
+          </div>
+          <div class="pain-row">
+            <span class="pain-icon">⚡</span>
+            <div class="pain-text">
+              <div class="pain-title">Slow Intelligence Cycles</div>
+              <div class="pain-title-zh zh-sub">情報週期緩慢</div>
+              <div class="pain-desc">By the time market intel reaches the BD team, competitors have already moved.</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="pain-row">
+            <span class="pain-icon">📝</span>
+            <div class="pain-text">
+              <div class="pain-title">RFQ &amp; Contract Bottlenecks</div>
+              <div class="pain-title-zh zh-sub">詢價單與合約瓶頸</div>
+              <div class="pain-desc">Manual RFQ processing and contract review delays cost months in deal cycles.</div>
+            </div>
+          </div>
+          <div class="pain-row">
+            <span class="pain-icon">🔮</span>
+            <div class="pain-text">
+              <div class="pain-title">Demand Forecasting Gaps</div>
+              <div class="pain-title-zh zh-sub">需求預測落差</div>
+              <div class="pain-desc">Capacity planning mismatches lead to either overbooking or missed revenue opportunities.</div>
+            </div>
+          </div>
+          <div class="pain-row">
+            <span class="pain-icon">🤝</span>
+            <div class="pain-text">
+              <div class="pain-title">Relationship Intelligence Loss</div>
+              <div class="pain-title-zh zh-sub">客戶關係情報流失</div>
+              <div class="pain-desc">Critical client context lives in email threads and individual reps — not systematically captured.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SLIDE 3: AI USE CASES ═══════════════ -->
+  <div class="slide" id="slide-2">
+    <div class="bg-grid"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="slide-inner">
+      <div class="section-eyebrow">AI Solutions · AI 解決方案</div>
+      <h2 class="section-title">Six AI Capabilities That<br>Transform Sales &amp; BD</h2>
+      <p class="section-title-zh zh-sub">六大 AI 能力，全面轉型業務開發</p>
+      <div class="cards-grid cards-grid-3" style="max-width:1100px;">
+        <div class="card">
+          <span class="card-icon">🧠</span>
+          <div class="card-title">Account Intelligence Engine</div>
+          <div class="card-title-zh zh-sub">客戶智能引擎</div>
+          <div class="card-desc">Real-time AI profiling of every key account — financial health, tech roadmap signals, competitive moves, buying triggers.</div>
+          <div class="card-desc-zh zh-sub">針對每位重要客戶進行即時 AI 分析，包含財務狀況、技術路線圖信號、競爭動態及採購觸發因素。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">📡</span>
+          <div class="card-title">Competitive Intelligence Radar</div>
+          <div class="card-title-zh zh-sub">競爭情報雷達</div>
+          <div class="card-desc">24/7 monitoring of Samsung, Intel, and emerging fabs — automatically surfacing threats and opportunities for BD strategy.</div>
+          <div class="card-desc-zh zh-sub">全天候監控三星、英特爾及新興晶圓廠，自動識別業務開發的威脅與機會。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">🤖</span>
+          <div class="card-title">AI-Assisted RFQ Processing</div>
+          <div class="card-title-zh zh-sub">AI 輔助詢價處理</div>
+          <div class="card-desc">Automatically parse, classify, and draft responses to RFQs — reducing response time from days to hours.</div>
+          <div class="card-desc-zh zh-sub">自動解析、分類並起草詢價單回覆，將響應時間從數天縮短至數小時。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">📈</span>
+          <div class="card-title">Demand Forecast AI</div>
+          <div class="card-title-zh zh-sub">需求預測 AI</div>
+          <div class="card-desc">Predict client wafer demand 6–18 months out using AI patterns from supply chain signals, earnings calls, and product launches.</div>
+          <div class="card-desc-zh zh-sub">利用供應鏈信號、財報電話及產品發佈的 AI 模式，預測客戶未來 6-18 個月的晶圓需求。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">💬</span>
+          <div class="card-title">Relationship Memory System</div>
+          <div class="card-title-zh zh-sub">客戶關係記憶系統</div>
+          <div class="card-desc">AI captures, structures, and surfaces every interaction, commitment, and preference across all accounts and reps.</div>
+          <div class="card-desc-zh zh-sub">AI 捕捉、整理並呈現所有客戶互動、承諾及偏好，跨越所有客戶與業務代表。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">⚡</span>
+          <div class="card-title">Deal Acceleration Copilot</div>
+          <div class="card-title-zh zh-sub">交易加速副駕</div>
+          <div class="card-desc">AI coaching for BD reps — next best action suggestions, objection handling scripts, pricing scenario modeling in real-time.</div>
+          <div class="card-desc-zh zh-sub">為業務代表提供 AI 教練指導，包含下一步最佳行動建議、異議處理腳本及即時定價情境模擬。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SLIDE 4: IMPACT METRICS ═══════════════ -->
+  <div class="slide" id="slide-3">
+    <div class="bg-grid"></div>
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="slide-inner">
+      <div class="section-eyebrow">ROI Impact · 投資回報</div>
+      <h2 class="section-title">Measurable Business Outcomes</h2>
+      <p class="section-title-zh zh-sub">可量化的業務成果</p>
+      <div class="cards-grid cards-grid-4" style="max-width:1100px; margin-bottom: 28px;">
+        <div class="metric-card">
+          <div class="metric-num">40%</div>
+          <div class="metric-label">Increase in Rep Productivity</div>
+          <div class="metric-label-zh zh-sub">業務代表生產力提升</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">3×</div>
+          <div class="metric-label">Faster Deal Cycle Time</div>
+          <div class="metric-label-zh zh-sub">成交周期加速</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">85%</div>
+          <div class="metric-label">Forecast Accuracy Rate</div>
+          <div class="metric-label-zh zh-sub">預測準確率</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">$0</div>
+          <div class="metric-label">Cost Per AI Intelligence Report</div>
+          <div class="metric-label-zh zh-sub">每份 AI 情報報告成本</div>
+        </div>
+      </div>
+      <div class="cards-grid cards-grid-3" style="max-width:1100px;">
+        <div class="card" style="background: linear-gradient(135deg, rgba(26,106,255,0.12), rgba(0,229,200,0.08));">
+          <span class="card-icon">🏆</span>
+          <div class="card-title">Win Rate Improvement</div>
+          <div class="card-title-zh zh-sub">成交率提升</div>
+          <div class="card-desc">Companies using AI in B2B sales see 20–35% improvement in win rates through better timing and personalization.</div>
+          <div class="card-desc-zh zh-sub">在 B2B 銷售中使用 AI 的企業，透過更精準的時機把握與個人化，贏單率提升 20-35%。</div>
+        </div>
+        <div class="card" style="background: linear-gradient(135deg, rgba(240,180,41,0.08), rgba(240,120,0,0.05));">
+          <span class="card-icon">🌐</span>
+          <div class="card-title">Market Coverage</div>
+          <div class="card-title-zh zh-sub">市場覆蓋範圍</div>
+          <div class="card-desc">AI monitors 500+ signals per account simultaneously — impossible for any human team to achieve manually.</div>
+          <div class="card-desc-zh zh-sub">AI 同時監控每個客戶超過 500 個信號，遠超任何人工團隊的能力範圍。</div>
+        </div>
+        <div class="card" style="background: linear-gradient(135deg, rgba(0,229,200,0.08), rgba(0,200,255,0.05));">
+          <span class="card-icon">⏱️</span>
+          <div class="card-title">Time to Value</div>
+          <div class="card-title-zh zh-sub">價值實現時間</div>
+          <div class="card-desc">AI systems can be deployed and delivering actionable intelligence within 30–60 days of integration.</div>
+          <div class="card-desc-zh zh-sub">AI 系統可在整合後 30-60 天內部署完成並提供可執行的情報。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SLIDE 5: HOW IT WORKS ═══════════════ -->
+  <div class="slide" id="slide-4">
+    <div class="bg-grid"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="slide-inner">
+      <div class="section-eyebrow">Implementation · 實施流程</div>
+      <h2 class="section-title">How the AI System Works</h2>
+      <p class="section-title-zh zh-sub">AI 系統運作方式</p>
+      <div class="process-steps" style="margin-bottom: 36px;">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-label">Data Ingestion</div>
+          <div class="step-label-zh zh-sub">數據攝取</div>
+          <div class="step-desc">CRM, email, calls, market feeds, earnings reports</div>
+          <div class="step-desc-zh zh-sub">CRM、電子郵件、通話、市場數據、財報</div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-label">AI Processing</div>
+          <div class="step-label-zh zh-sub">AI 處理分析</div>
+          <div class="step-desc">Pattern recognition, sentiment analysis, opportunity scoring</div>
+          <div class="step-desc-zh zh-sub">模式識別、情感分析、機會評分</div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-label">Intelligence Delivery</div>
+          <div class="step-label-zh zh-sub">情報輸出</div>
+          <div class="step-desc">Actionable briefs, alerts, and recommendations to BD team</div>
+          <div class="step-desc-zh zh-sub">向業務團隊提供可執行的簡報、警報與建議</div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <div class="step-label">BD Action</div>
+          <div class="step-label-zh zh-sub">業務行動</div>
+          <div class="step-desc">Rep acts on AI insights — faster, smarter outreach</div>
+          <div class="step-desc-zh zh-sub">業務代表基於 AI 洞察採取行動，更快更智能地觸達客戶</div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">5</div>
+          <div class="step-label">Continuous Learning</div>
+          <div class="step-label-zh zh-sub">持續學習</div>
+          <div class="step-desc">AI learns from outcomes to improve future recommendations</div>
+          <div class="step-desc-zh zh-sub">AI 從結果中學習，持續優化未來建議</div>
+        </div>
+      </div>
+      <div class="cards-grid cards-grid-3" style="max-width:1100px;">
+        <div class="card">
+          <span class="card-icon">🔒</span>
+          <div class="card-title">Enterprise Security</div>
+          <div class="card-title-zh zh-sub">企業級安全</div>
+          <div class="card-desc">All data processed in private, air-gapped environments. Zero third-party data sharing. SOC 2 compliant architecture.</div>
+          <div class="card-desc-zh zh-sub">所有數據在私有、隔離環境中處理。零第三方數據共享。符合 SOC 2 標準架構。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">🔌</span>
+          <div class="card-title">Seamless Integration</div>
+          <div class="card-title-zh zh-sub">無縫整合</div>
+          <div class="card-desc">Integrates with Salesforce, SAP, Microsoft 365, and custom internal CRM/ERP systems via API.</div>
+          <div class="card-desc-zh zh-sub">透過 API 與 Salesforce、SAP、Microsoft 365 及自訂內部 CRM/ERP 系統整合。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">📋</span>
+          <div class="card-title">Customized for TSMC</div>
+          <div class="card-title-zh zh-sub">為台積電量身定製</div>
+          <div class="card-desc">AI models trained on semiconductor industry vertical — TSMC's specific customer segments, products, and market dynamics.</div>
+          <div class="card-desc-zh zh-sub">AI 模型針對半導體行業垂直領域訓練，涵蓋台積電特定客戶群、產品及市場動態。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SLIDE 6: USE CASE DEEP DIVE — TSMC SPECIFIC ═══════════════ -->
+  <div class="slide" id="slide-5">
+    <div class="bg-grid"></div>
+    <div class="bg-glow glow-1"></div>
+    <div class="slide-inner">
+      <div class="section-eyebrow">TSMC-Specific · 台積電專屬應用</div>
+      <h2 class="section-title">AI Built for Semiconductor BD</h2>
+      <p class="section-title-zh zh-sub">專為半導體業務開發設計的 AI</p>
+      <div class="cards-grid cards-grid-2" style="max-width:1000px;">
+        <div class="card">
+          <span class="card-icon">🍎</span>
+          <div class="card-title">Hyperscaler &amp; Fabless Client Tracking</div>
+          <div class="card-title-zh zh-sub">超大規模與無晶圓廠客戶追蹤</div>
+          <div class="card-desc">AI monitors Apple, Nvidia, AMD, Qualcomm chipset roadmaps — alerting BD teams when design wins, tape-outs, or capacity shifts are imminent. Get ahead of every technology node transition.</div>
+          <div class="card-desc-zh zh-sub">AI 監控蘋果、輝達、超微、高通的晶片路線圖，在設計勝出、流片或產能調整即將發生時提醒業務團隊。搶先掌握每次技術節點轉換。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">🏭</span>
+          <div class="card-title">Capacity Allocation Intelligence</div>
+          <div class="card-title-zh zh-sub">產能分配智能</div>
+          <div class="card-desc">Predictive AI model that forecasts which clients will need capacity increases, decreases, or node migrations 6–18 months out — enabling proactive BD conversations before competitors do.</div>
+          <div class="card-desc-zh zh-sub">預測性 AI 模型，提前 6-18 個月預測哪些客戶需要增加、減少產能或遷移節點，使業務能在競爭對手之前主動發起對話。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">🌏</span>
+          <div class="card-title">Geopolitical Risk &amp; Opportunity Signaling</div>
+          <div class="card-title-zh zh-sub">地緣政治風險與機會信號</div>
+          <div class="card-desc">Real-time monitoring of export controls, tariff changes, and geopolitical events affecting key clients — giving TSMC BD instant strategic context for every conversation.</div>
+          <div class="card-desc-zh zh-sub">即時監控影響關鍵客戶的出口管制、關稅變化及地緣政治事件，為台積電業務團隊的每次對話提供即時戰略背景。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">📄</span>
+          <div class="card-title">LTA &amp; Contract Intelligence</div>
+          <div class="card-title-zh zh-sub">長期協議與合約智能</div>
+          <div class="card-desc">AI analysis of Long-Term Agreements — automatic flagging of renewal windows, pricing renegotiation triggers, and volume commitment deviations across all accounts.</div>
+          <div class="card-desc-zh zh-sub">AI 分析長期協議，自動標記續約窗口、價格重新談判觸發點及所有客戶的數量承諾偏差。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SLIDE 7: ABOUT TITAN SIGNAL ═══════════════ -->
+  <div class="slide" id="slide-6">
+    <div class="bg-grid"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="slide-inner">
+      <div class="section-eyebrow">About Us · 關於我們</div>
+      <div class="titan-logo-text">TITAN SIGNAL</div>
+      <div class="company-tag">AI Foundry — Building Intelligence Systems for Enterprise</div>
+      <div class="cards-grid cards-grid-3" style="max-width:1100px; margin-bottom:24px;">
+        <div class="card">
+          <span class="card-icon">⚡</span>
+          <div class="card-title">230+ AI Daemons</div>
+          <div class="card-title-zh zh-sub">230+ AI 自動化智能體</div>
+          <div class="card-desc">Production-grade autonomous AI agents running 24/7 across trading, intelligence, outreach, and operations verticals.</div>
+          <div class="card-desc-zh zh-sub">在交易、情報、業務拓展及運營垂直領域，24/7 全天候運行的生產級自主 AI 智能體。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">🌐</span>
+          <div class="card-title">33 Mobile AI Apps</div>
+          <div class="card-title-zh zh-sub">33 款行動 AI 應用程式</div>
+          <div class="card-desc">Deployed AI-powered applications across iGaming, Expat services, and professional verticals on Google Play Store.</div>
+          <div class="card-desc-zh zh-sub">在 Google Play 商店部署涵蓋 iGaming、海外服務及專業垂直領域的 AI 驅動應用程式。</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">💰</span>
+          <div class="card-title">$120M Valuation</div>
+          <div class="card-title-zh zh-sub">1.2 億美元估值</div>
+          <div class="card-desc">5 non-correlated revenue streams: Algorithmic Trading, B2B Leads, SaaS Subscriptions, iGaming, and Mobile.</div>
+          <div class="card-desc-zh zh-sub">5 個非相關收入來源：算法交易、B2B 潛在客戶、SaaS 訂閱、iGaming 及行動端。</div>
+        </div>
+      </div>
+      <div class="roadmap" style="max-width:1000px;">
+        <div class="roadmap-item">
+          <div class="roadmap-phase">Phase 1</div>
+          <div class="roadmap-line"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-title">Discovery &amp; Integration</div>
+            <div class="roadmap-title-zh zh-sub">探索與整合 · Weeks 1–4</div>
+            <div class="roadmap-desc">Audit existing CRM data, map BD workflows, identify highest-impact AI use cases for TSMC's specific accounts</div>
+          </div>
+          <div class="roadmap-tag">30 days</div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-phase">Phase 2</div>
+          <div class="roadmap-line"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-title">Pilot Deployment</div>
+            <div class="roadmap-title-zh zh-sub">試點部署 · Weeks 5–12</div>
+            <div class="roadmap-desc">Deploy account intelligence and competitive radar modules for 5 priority accounts with measurable KPIs</div>
+          </div>
+          <div class="roadmap-tag">60 days</div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-phase">Phase 3</div>
+          <div class="roadmap-line"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-title">Full BD Transformation</div>
+            <div class="roadmap-title-zh zh-sub">全面業務轉型 · Q3–Q4</div>
+            <div class="roadmap-desc">Enterprise-wide rollout with custom AI models, LTA intelligence, and demand forecasting system</div>
+          </div>
+          <div class="roadmap-tag">90 days</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SLIDE 8: CTA ═══════════════ -->
+  <div class="slide" id="slide-7">
+    <div class="bg-grid"></div>
+    <div class="bg-glow glow-1" style="width:800px; height:800px; top:-200px; right:-200px; background:rgba(26,106,255,0.15);"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="slide-inner" style="align-items:center; text-align:center;">
+      <div class="section-eyebrow">Next Steps · 下一步</div>
+      <div class="cta-box">
+        <div class="cta-title">Let's Build the Future of<br>Semiconductor Sales Together</div>
+        <div class="cta-title-zh zh-sub">攜手共創半導體銷售的未來</div>
+        <div class="cta-subtitle">We propose a 30-day Discovery Engagement — no cost, full access to our AI intelligence stack applied directly to your top 3 accounts. See real results before any commitment.</div>
+        <div class="cta-subtitle-zh zh-sub">我們提議進行一個 30 天的探索合作 — 零成本，完整使用我們的 AI 情報系統，直接應用於您的前 3 大客戶。在任何承諾之前，先看到真實成果。</div>
+        <a href="#" class="cta-btn">Schedule Discovery Call · 預約探索電話</a>
+      </div>
+      <div style="display:flex; gap:40px; margin-top:40px; align-items:center;">
+        <div style="text-align:center;">
+          <div style="font-size:13px; color:var(--gray);">Contact</div>
+          <div style="font-size:14px; font-weight:600; color:white; margin-top:4px;">Titan Signal AI Foundry</div>
+        </div>
+        <div style="width:1px; height:40px; background:rgba(255,255,255,0.1);"></div>
+        <div style="text-align:center;">
+          <div style="font-size:13px; color:var(--gray);">Platform</div>
+          <div style="font-size:14px; font-weight:600; color:var(--cyan); margin-top:4px;">titan-signal.io</div>
+        </div>
+        <div style="width:1px; height:40px; background:rgba(255,255,255,0.1);"></div>
+        <div style="text-align:center;">
+          <div style="font-size:13px; color:var(--gray);">Engagement Model</div>
+          <div style="font-size:14px; font-weight:600; color:white; margin-top:4px;">30-Day Free Pilot · 30天免費試點</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<script>
+let currentSlide = 0;
+const totalSlides = 8;
+
+function buildDots() {
+  const c = document.getElementById('dots');
+  c.innerHTML = '';
+  for (let i = 0; i < totalSlides; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    c.appendChild(d);
+  }
+}
+
+function updateUI() {
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === currentSlide);
+  });
+  document.getElementById('counter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+  document.getElementById('progressBar').style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+}
+
+function goTo(n) {
+  const slides = document.querySelectorAll('.slide');
+  slides[currentSlide].classList.remove('active');
+  slides[currentSlide].classList.add('exit');
+  setTimeout(() => slides[currentSlide - (n > currentSlide ? 0 : 0)].classList.remove('exit'), 600);
+  
+  // remove all exit classes
+  setTimeout(() => {
+    slides.forEach(s => s.classList.remove('exit'));
+  }, 601);
+
+  currentSlide = n;
+  slides[currentSlide].classList.add('active');
+  updateUI();
+}
+
+function nextSlide() {
+  if (currentSlide < totalSlides - 1) goTo(currentSlide + 1);
+}
+function prevSlide() {
+  if (currentSlide > 0) goTo(currentSlide - 1);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+});
+
+function setLang(lang) {
+  if (lang === 'zh') {
+    document.body.classList.add('zh-mode');
+    document.getElementById('btnZH').classList.add('active');
+    document.getElementById('btnEN').classList.remove('active');
+  } else {
+    document.body.classList.remove('zh-mode');
+    document.getElementById('btnEN').classList.add('active');
+    document.getElementById('btnZH').classList.remove('active');
+  }
+}
+
+// Note: In "bilingual" default mode, both EN and ZH are shown simultaneously.
+// In ZH-only mode (toggle), EN text is hidden. In EN-only mode default — ZH subtitles shown below EN.
+// The .zh-sub class elements are always visible by default (bilingual side-by-side).
+
+buildDots();
+updateUI();
+
+// Touch support
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (dx < -50) nextSlide();
+  if (dx > 50) prevSlide();
+});
+</script>
+
+
+<div id="preact-border-shadow-host" popover="manual" style="border: none; padding: 0px; margin: 0px; inset: 0px; position: fixed; width: 100vw; height: 100vh; background: transparent; pointer-events: none;"></div></body></html>
