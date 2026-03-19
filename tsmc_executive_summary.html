@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Titan Signal AI Foundry — Executive Summary | TSMC Partnership</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #050d1a;
+    --navy2: #0a1628;
+    --blue: #1a6aff;
+    --cyan: #00c8ff;
+    --teal: #00e5c8;
+    --gold: #f0b429;
+    --white: #ffffff;
+    --gray: #8a9ab5;
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(0,200,255,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', 'Noto Sans TC', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* LANG TOGGLE */
+  .lang-toggle {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    z-index: 100;
+    display: flex;
+    gap: 2px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 4px;
+  }
+  .lang-btn {
+    padding: 5px 14px;
+    border: none;
+    background: transparent;
+    color: var(--gray);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lang-btn.active { background: var(--blue); color: white; }
+
+  /* BG */
+  .bg-glow { position: fixed; border-radius: 50%; filter: blur(160px); pointer-events: none; z-index: 0; }
+  .g1 { width: 600px; height: 600px; background: rgba(26,106,255,0.08); top: -150px; right: -150px; }
+  .g2 { width: 400px; height: 400px; background: rgba(0,229,200,0.06); bottom: 0; left: -100px; }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 64px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* LETTERHEAD */
+  .letterhead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--card-border);
+    margin-bottom: 44px;
+  }
+  .logo-text {
+    font-size: 22px; font-weight: 900; letter-spacing: 1px;
+    background: linear-gradient(90deg, #fff 0%, var(--cyan) 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .logo-sub { font-size: 11px; color: var(--gray); margin-top: 3px; letter-spacing: 1.5px; text-transform: uppercase; }
+  .letterhead-right { text-align: right; font-size: 12px; color: var(--gray); line-height: 1.8; }
+  .conf {
+    display: inline-block; padding: 3px 10px;
+    background: rgba(0,200,255,0.1); border: 1px solid rgba(0,200,255,0.3);
+    border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--cyan); margin-bottom: 8px;
+  }
+
+  /* TO BLOCK */
+  .to-block { margin-bottom: 36px; }
+  .to-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
+  .to-name { font-size: 18px; font-weight: 700; color: white; margin-bottom: 2px; }
+  .to-title { font-size: 13px; color: var(--gray); }
+
+  /* SALUTATION */
+  .salutation { font-size: 16px; font-weight: 600; margin-bottom: 24px; color: white; }
+  .salutation-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 14px; color: var(--cyan); margin-bottom: 28px; }
+
+  /* BODY */
+  .body-text { font-size: 15px; line-height: 1.85; color: rgba(255,255,255,0.82); margin-bottom: 20px; }
+  .body-text strong { color: white; }
+  .body-text .accent { color: var(--cyan); font-weight: 600; }
+  .body-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 13px; color: rgba(138,154,181,0.75); line-height: 1.9; margin-bottom: 24px; }
+
+  /* DIVIDER */
+  hr.divider { border: none; border-top: 1px solid var(--card-border); margin: 44px 0; }
+
+  /* EXEC HEADER */
+  .exec-header { text-align: center; margin-bottom: 36px; }
+  .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
+  .exec-title { font-size: clamp(28px, 4vw, 40px); font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
+  .exec-title .accent { background: linear-gradient(135deg, var(--cyan), var(--blue)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .exec-title-zh { font-family: 'Noto Sans TC', sans-serif; font-size: clamp(18px, 2.5vw, 26px); font-weight: 700; color: rgba(255,255,255,0.55); margin-bottom: 12px; }
+  .exec-sub { font-size: 14px; color: var(--gray); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+  .exec-sub-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: rgba(138,154,181,0.65); max-width: 600px; margin: 6px auto 0; line-height: 1.8; }
+
+  /* METRICS */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--card-border);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 28px 0;
+  }
+  .metric-cell { background: var(--navy2); padding: 20px 16px; text-align: center; }
+  .metric-num {
+    font-size: 28px; font-weight: 900;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1; margin-bottom: 4px;
+  }
+  .metric-label { font-size: 11px; color: var(--gray); }
+  .metric-label-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 10px; color: rgba(138,154,181,0.55); margin-top: 2px; }
+
+  /* SECTION */
+  .section-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; margin-top: 32px; }
+  .section-title-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 14px; color: var(--cyan); margin-bottom: 14px; }
+
+  /* CARDS */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 20px; transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(0,200,255,0.4); }
+  .card-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+  .card-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .card-title-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 11px; color: var(--cyan); margin-bottom: 8px; }
+  .card-body { font-size: 12px; color: var(--gray); line-height: 1.55; }
+  .card-body-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 11px; color: rgba(138,154,181,0.65); line-height: 1.7; margin-top: 6px; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+  .data-table thead th { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--card-border); }
+  .data-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .data-table tbody td { padding: 11px 12px; color: var(--gray); vertical-align: middle; }
+  .data-table tbody td:first-child { color: white; font-weight: 600; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: 10px; font-weight: 700; }
+  .badge-cyan { background: rgba(0,200,255,0.1); color: var(--cyan); border: 1px solid rgba(0,200,255,0.25); }
+  .badge-teal { background: rgba(0,229,200,0.1); color: var(--teal); border: 1px solid rgba(0,229,200,0.25); }
+
+  /* CTA BOX */
+  .cta-box {
+    background: linear-gradient(135deg, rgba(26,106,255,0.12), rgba(0,229,200,0.08));
+    border: 1px solid rgba(0,200,255,0.3);
+    border-radius: 16px; padding: 32px 36px; text-align: center; margin: 32px 0;
+    position: relative; overflow: hidden;
+  }
+  .cta-box::before {
+    content: ''; position: absolute; top:-50%; left:-50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at center, rgba(0,200,255,0.05) 0%, transparent 70%);
+  }
+  .cta-big { font-size: 22px; font-weight: 800; margin-bottom: 4px; position: relative; }
+  .cta-big-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 16px; color: var(--cyan); margin-bottom: 14px; position: relative; }
+  .cta-detail { font-size: 14px; color: var(--gray); line-height: 1.7; position: relative; }
+  .cta-detail-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: rgba(138,154,181,0.7); margin-top: 6px; position: relative; }
+
+  /* SIGN */
+  .sign-block { margin-top: 36px; }
+  .sign-name { font-size: 17px; font-weight: 700; }
+  .sign-title { font-size: 13px; color: var(--gray); margin-top: 3px; }
+  .sign-title-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: rgba(138,154,181,0.7); }
+  .sign-contact { font-size: 13px; color: var(--cyan); margin-top: 6px; }
+
+  /* FOOTER */
+  .footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--card-border); display: flex; justify-content: space-between; }
+  .footer div { font-size: 11px; color: rgba(255,255,255,0.18); line-height: 1.7; }
+  .footer div:last-child { text-align: right; }
+
+  /* LANG VISIBILITY */
+  body.zh-mode .en-only { display: none !important; }
+  body.zh-mode .zh-only { display: block !important; }
+  body:not(.zh-mode) .zh-only { display: none !important; }
+  .zh-sub { display: block; }
+</style>
+</head>
+<body>
+
+<!-- LANG TOGGLE -->
+<div class="lang-toggle">
+  <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" id="btnZH" onclick="setLang('zh')">繁中</button>
+</div>
+
+<div class="bg-glow g1"></div>
+<div class="bg-glow g2"></div>
+
+<div class="page">
+
+  <!-- LETTERHEAD -->
+  <div class="letterhead">
+    <div>
+      <div class="logo-text">TITAN SIGNAL</div>
+      <div class="logo-sub">AI Foundry</div>
+    </div>
+    <div class="letterhead-right">
+      <div class="conf">🔒 Confidential · 機密</div><br>
+      March 19, 2026 · 2026年3月19日<br>
+      titan-signal.io
+    </div>
+  </div>
+
+  <!-- TO -->
+  <div class="to-block">
+    <div class="to-label">Addressed To · 致</div>
+    <div class="to-name">TSMC — Sales & Business Development Leadership</div>
+    <div class="to-title">台灣積體電路製造股份有限公司 · 業務暨商業發展部門</div>
+  </div>
+
+  <div class="salutation">Dear TSMC Leadership,</div>
+  <div class="salutation-zh zh-sub">尊敬的台積電領導團隊，</div>
+
+  <!-- COVER LETTER BODY -->
+  <p class="body-text">
+    We are writing to present <strong>Titan Signal AI Foundry</strong> and a specific proposal for how our autonomous AI infrastructure can <span class="accent">directly transform TSMC's Sales and Business Development operations</span> — accelerating deal velocity, deepening customer intelligence, and positioning TSMC's BD team at the leading edge of AI-driven enterprise relationships.
+  </p>
+  <p class="body-zh zh-sub">
+    我們致函介紹 <strong>Titan Signal AI Foundry</strong>，並提出具體建議，說明我們的自主 AI 基礎設施如何直接改變台積電的業務暨商業發展運作——加速成交速度、深化客戶智能，並使台積電業務團隊在 AI 驅動的企業關係中佔據領先地位。
+  </p>
+
+  <p class="body-text">
+    TSMC manages the most complex portfolio of customer relationships in the global semiconductor industry — Apple, Nvidia, AMD, Qualcomm, and hundreds of design houses across every major technology node. Managing this at scale, with human teams, creates compressible intelligence gaps that competitors can exploit. <strong>AI eliminates those gaps.</strong>
+  </p>
+  <p class="body-zh zh-sub">
+    台積電管理著全球半導體行業中最複雜的客戶關係組合——蘋果、輝達、超微、高通，以及跨越每個主要技術節點的數百個設計公司。依靠人工團隊大規模管理這些關係，會產生可壓縮的情報缺口，競爭對手可能趁機利用。<strong>AI 消除了這些缺口。</strong>
+  </p>
+
+  <p class="body-text">
+    The executive summary below outlines a proposed AI engagement model specifically designed for TSMC's BD context — built on Titan Signal's production-grade autonomous intelligence stack, and deployable within 30–60 days.
+  </p>
+  <p class="body-zh zh-sub">
+    以下執行摘要概述了專為台積電業務開發背景設計的 AI 合作模式——基於 Titan Signal 生產級自主智能系統，可在 30-60 天內完成部署。
+  </p>
+
+  <hr class="divider">
+
+  <!-- EXEC SUMMARY -->
+  <div class="exec-header">
+    <div class="eyebrow">Executive Summary · 執行摘要</div>
+    <h1 class="exec-title"><span class="accent">AI-Powered</span> Sales &amp; BD<br>for Semiconductor Leaders</h1>
+    <div class="exec-title-zh zh-sub">半導體領導者的 AI 驅動業務開發解決方案</div>
+    <p class="exec-sub">A purpose-built AI intelligence system for TSMC's Sales & BD team — delivering real-time account intelligence, automated RFQ processing, demand forecasting, and competitive radar.</p>
+    <p class="exec-sub-zh zh-sub">為台積電業務暨商業發展團隊量身打造的 AI 智能系統——提供即時客戶情報、自動化詢價處理、需求預測及競爭對手雷達。</p>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metrics-row">
+    <div class="metric-cell">
+      <div class="metric-num">3×</div>
+      <div class="metric-label">Faster Deal Velocity</div>
+      <div class="metric-label-zh zh-sub">成交速度提升</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-num">60%</div>
+      <div class="metric-label">Less Manual Research</div>
+      <div class="metric-label-zh zh-sub">減少人工研究</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-num">85%</div>
+      <div class="metric-label">Forecast Accuracy</div>
+      <div class="metric-label-zh zh-sub">預測準確率</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-num">30d</div>
+      <div class="metric-label">Time to Value</div>
+      <div class="metric-label-zh zh-sub">價值實現時間</div>
+    </div>
+  </div>
+
+  <!-- THE CHALLENGE -->
+  <div class="section-title">The Challenge</div>
+  <div class="section-title-zh zh-sub">核心挑戰</div>
+  <p class="body-text">
+    TSMC's BD teams manage hundreds of global accounts simultaneously. Sales teams spend up to <strong>65% of time on non-selling activities</strong> — manual data entry, market research, reporting, and contract review. Critical client context lives in email threads, not institutional memory. Competitive intelligence arrives too late. Demand forecasting relies on human intuition rather than signal-driven AI models.
+  </p>
+  <p class="body-zh zh-sub">
+    台積電業務團隊同時管理數百個全球客戶。業務人員高達 <strong>65% 的時間花費在非銷售活動上</strong>——手動資料輸入、市場研究、報告撰寫及合約審查。關鍵客戶資訊存在於電子郵件往來中，而非機構記憶。競爭情報來得太遲。需求預測依賴人工直覺，而非信號驅動的 AI 模型。
+  </p>
+
+  <!-- SIX CAPABILITIES -->
+  <div class="section-title">Six AI Capabilities</div>
+  <div class="section-title-zh zh-sub">六大 AI 核心能力</div>
+  <div class="two-col">
+    <div class="card">
+      <span class="card-icon">🧠</span>
+      <div class="card-title">Account Intelligence Engine</div>
+      <div class="card-title-zh zh-sub">客戶智能引擎</div>
+      <div class="card-body">Real-time AI profiling of every key account — financial health, tech roadmap signals, competitive moves, and buying triggers.</div>
+      <div class="card-body-zh zh-sub">針對每位重要客戶進行即時 AI 分析，涵蓋財務狀況、技術路線信號、競爭動態及採購觸發因素。</div>
+    </div>
+    <div class="card">
+      <span class="card-icon">📡</span>
+      <div class="card-title">Competitive Intelligence Radar</div>
+      <div class="card-title-zh zh-sub">競爭情報雷達</div>
+      <div class="card-body">24/7 monitoring of Samsung, Intel, and emerging fabs — automatically surfacing threats and opportunities for BD strategy.</div>
+      <div class="card-body-zh zh-sub">全天候監控三星、英特爾及新興晶圓廠，自動識別業務開發的威脅與機會。</div>
+    </div>
+    <div class="card">
+      <span class="card-icon">🤖</span>
+      <div class="card-title">AI-Assisted RFQ Processing</div>
+      <div class="card-title-zh zh-sub">AI 輔助詢價處理</div>
+      <div class="card-body">Automatically parse, classify, and draft responses to RFQs — reducing response time from days to hours.</div>
+      <div class="card-body-zh zh-sub">自動解析、分類並起草詢價單回覆，將響應時間從數天縮短至數小時。</div>
+    </div>
+    <div class="card">
+      <span class="card-icon">📈</span>
+      <div class="card-title">Demand Forecast AI</div>
+      <div class="card-title-zh zh-sub">需求預測 AI</div>
+      <div class="card-body">Predict client wafer demand 6–18 months out using supply chain signals, earnings calls, and product launch patterns.</div>
+      <div class="card-body-zh zh-sub">利用供應鏈信號、財報電話及產品發佈模式，預測客戶未來 6-18 個月的晶圓需求。</div>
+    </div>
+    <div class="card">
+      <span class="card-icon">💬</span>
+      <div class="card-title">Relationship Memory System</div>
+      <div class="card-title-zh zh-sub">客戶關係記憶系統</div>
+      <div class="card-body">AI captures, structures, and surfaces every interaction, commitment, and preference across all accounts and reps.</div>
+      <div class="card-body-zh zh-sub">AI 捕捉、整理並呈現所有客戶互動、承諾及偏好，跨越所有客戶與業務代表。</div>
+    </div>
+    <div class="card">
+      <span class="card-icon">📄</span>
+      <div class="card-title">LTA & Contract Intelligence</div>
+      <div class="card-title-zh zh-sub">長期協議與合約智能</div>
+      <div class="card-body">Automatic flagging of renewal windows, pricing renegotiation triggers, and volume commitment deviations across all accounts.</div>
+      <div class="card-body-zh zh-sub">自動標記續約窗口、價格重新談判觸發點及所有客戶的數量承諾偏差。</div>
+    </div>
+  </div>
+
+  <!-- ROI TABLE -->
+  <div class="section-title" style="margin-top:32px;">Measurable ROI</div>
+  <div class="section-title-zh zh-sub">可量化的投資回報</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Outcome · 成效</th>
+        <th>Metric · 指標</th>
+        <th>Timeline · 時程</th>
+        <th>Status · 狀態</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Deal Velocity · 成交速度</td>
+        <td>3× faster deal cycles</td>
+        <td>Within 90 days · 90天內</td>
+        <td><span class="badge badge-cyan">Proven</span></td>
+      </tr>
+      <tr>
+        <td>Rep Productivity · 代表效率</td>
+        <td>40% increase in selling time</td>
+        <td>Within 60 days · 60天內</td>
+        <td><span class="badge badge-cyan">Proven</span></td>
+      </tr>
+      <tr>
+        <td>Forecast Accuracy · 預測準確率</td>
+        <td>85% demand forecast accuracy</td>
+        <td>After 1 quarter · 1季後</td>
+        <td><span class="badge badge-teal">Benchmarked</span></td>
+      </tr>
+      <tr>
+        <td>Intelligence Coverage · 情報覆蓋</td>
+        <td>500+ signals per account, 24/7</td>
+        <td>From Day 1 · 第1天起</td>
+        <td><span class="badge badge-cyan">Live</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ENGAGEMENT MODEL -->
+  <div class="section-title" style="margin-top:32px;">Proposed Engagement</div>
+  <div class="section-title-zh zh-sub">建議合作模式</div>
+
+  <div class="cta-box">
+    <div class="cta-big">30-Day Free Discovery Pilot</div>
+    <div class="cta-big-zh zh-sub">30天免費探索試點</div>
+    <div class="cta-detail">
+      We propose a zero-cost, 30-day Discovery Engagement — full access to our AI intelligence stack applied directly to TSMC's top 3 accounts. No integration required. Real results before any commitment.
+    </div>
+    <div class="cta-detail-zh zh-sub">
+      我們提議進行零成本 30 天探索合作——完整使用我們的 AI 情報系統，直接應用於台積電前三大客戶。無需系統整合。在任何承諾之前，先看到真實成果。
+    </div>
+  </div>
+
+  <!-- ABOUT TITAN SIGNAL -->
+  <div class="section-title">About Titan Signal AI Foundry</div>
+  <div class="section-title-zh zh-sub">關於 Titan Signal AI Foundry</div>
+  <p class="body-text">
+    Titan Signal is a production AI infrastructure company with <strong>230+ autonomous daemons</strong> running 24/7 across trading, intelligence, outreach, and cybersecurity verticals. We have deployed 33 AI-powered mobile applications globally and operate a self-reinforcing AI production engine that expands to new verticals at near-zero marginal cost. Our systems are enterprise-grade: private cloud deployment, air-gapped data environments, and zero third-party data sharing. Valued at <strong>$120M</strong> with 5 non-correlated revenue streams.
+  </p>
+  <p class="body-zh zh-sub">
+    Titan Signal 是一家生產級 AI 基礎設施公司，擁有 <strong>230+ 個自主智能體</strong>，全天候運行於交易、情報、業務拓展及資安垂直領域。我們已在全球部署 33 款 AI 驅動移動應用程式，並運營一個自我強化的 AI 生產引擎，可以近乎零邊際成本擴展至新的垂直市場。我們的系統達到企業級標準：私有雲部署、物理隔離資料環境及零第三方資料共享。估值 <strong>1.2億美元</strong>，擁有5個非相關收入來源。
+  </p>
+
+  <!-- SIGN -->
+  <div class="sign-block">
+    <div class="sign-name">Gary Chen</div>
+    <div class="sign-title">Founder & Chief Executive Officer</div>
+    <div class="sign-title-zh zh-sub">創辦人兼執行長</div>
+    <div class="sign-title">Titan Signal AI Foundry</div>
+    <div class="sign-contact">titan-signal.io</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>TITAN SIGNAL AI FOUNDRY · CONFIDENTIAL · 機密<br>為台積電業務開發部門專屬製作</div>
+    <div>March 2026 · 2026年3月<br>Prepared for TSMC Sales &amp; BD Leadership</div>
+  </div>
+
+</div>
+
+<script>
+function setLang(lang) {
+  if (lang === 'zh') {
+    document.body.classList.add('zh-mode');
+    document.getElementById('btnZH').classList.add('active');
+    document.getElementById('btnEN').classList.remove('active');
+  } else {
+    document.body.classList.remove('zh-mode');
+    document.getElementById('btnEN').classList.add('active');
+    document.getElementById('btnZH').classList.remove('active');
+  }
+}
+</script>
+</body>
+</html>
