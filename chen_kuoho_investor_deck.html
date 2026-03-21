@@ -208,6 +208,61 @@ body { font-size:18px; }
 .ip-moat,.ai-sep::after { font-size:11px !important; }
 .nlabel-zh,.jz,.ai-z,.ip-desc-zh,.cc-body-zh,.infra-node-loc-zh,
 .cg-title-zh,.infra-stat-lbl-zh,.sz,.open-zh { font-size:14px !important; }
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 768px) {
+  .wrap { padding:60px 20px; }
+  .section-h { font-size:clamp(28px,7vw,42px) !important; }
+  .open-p { font-size:17px !important; }
+
+  /* Numbers grid: 2 columns on mobile */
+  .numbers-grid { grid-template-columns:1fr 1fr; }
+  .nc { padding:28px 16px; }
+  .nbig { font-size:clamp(40px,10vw,60px); }
+
+  /* Infra nodes: stack */
+  .infra-nodes { grid-template-columns:1fr; }
+  .infra-card { padding:24px 20px; }
+
+  /* Sales pipeline: stack vertically */
+  .pipeline-flow { grid-template-columns:1fr; gap:12px; }
+  .pipe-arrow { display:none; }
+  .pipe-step { padding:16px 14px; text-align:left; display:flex; gap:14px; align-items:flex-start; }
+  .pipe-icon { font-size:20px; margin-bottom:0; flex-shrink:0; }
+  .pipe-num { font-size:20px; }
+  .sales-card { padding:24px 20px; }
+
+  /* SWOT grid: stack */
+  .swot-grid { grid-template-columns:1fr; }
+  .sq { padding:28px 20px; }
+  .ai-grid { grid-template-columns:1fr; }
+
+  /* 5 streams: 3 then 2 */
+  .streams { grid-template-columns:repeat(3,1fr); }
+
+  /* AI Century */
+  .cg-grid { grid-template-columns:1fr 1fr; }
+  .cc-grid { grid-template-columns:1fr; }
+
+  /* IP grid: stack */
+  .ip-grid { grid-template-columns:1fr; }
+
+  /* Nav dots: smaller */
+  .nav { right:12px; gap:10px; }
+  .nd { width:6px; height:6px; }
+
+  /* Lang bar */
+  .lb { padding:5px 10px; font-size:9px; }
+}
+
+@media (max-width: 420px) {
+  .wrap { padding:48px 16px; }
+  .numbers-grid { grid-template-columns:1fr; }
+  .streams { grid-template-columns:repeat(2,1fr); }
+  .section-h { font-size:clamp(24px,8vw,36px) !important; }
+  .jt, .ai-t, .ip-desc, .cc-body, .open-p, .infra-node-role { font-size:16px !important; }
+  .infra-stat-val { font-size:20px !important; }
+}
+
 </style>
 </head>
 <body>
@@ -522,6 +577,31 @@ body { font-size:18px; }
   <div class="ip-statement">
     <div class="ip-stmt-big">This is not a software product.<br><strong>This is sovereign AI infrastructure.</strong></div>
     <div class="ip-stmt-zh zh-t">這不是一個軟件產品。這是主權AI基礎設施——屬於掌握它的人。</div>
+  </div>
+</div>
+</div>
+
+
+
+
+  <div class="cta-h-zh zh-t">數字已清晰。下一步是對話。條款私下溝通。</div>
+
+  <div class="zh-t" style="font-family:'Noto Sans TC',sans-serif; font-size:12px; color:rgba(255,255,255,0.15); margin-top:8px; max-width:520px; line-height:1.9;">
+    我不是要您做決定。我只請求30分鐘——讓您看到系統運行，提出任何問題，形成您自己的判斷。
+  </div>
+
+  <div class="foot-row">
+    <div class="foot-l">
+      <div class="fn">Gary Chen · 陳家瑋</div>
+      <div class="fr">Founder & CEO · Titan Signal AI Foundry<br><span class="fz zh-t" style="font-family:'Noto Sans TC',sans-serif;">創辦人兼執行長</span></div>
+      <div class="fe">gary@titansignal.io</div>
+    </div>
+    <div class="foot-r">
+      Prepared exclusively for 陳國和先生<br>
+      <span class="zh-t" style="font-family:'Noto Sans TC',sans-serif;">條款私下溝通 · Terms discussed personally</span><br>
+      titansignal.io · March 2026<br>
+      <span style="color:rgba(220,170,30,0.25); font-size:9px; letter-spacing:1px;">NO VALUATION DISCLOSED · 估值私下討論</span>
+    </div>
   </div>
 </div>
 </div>
