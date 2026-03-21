@@ -208,76 +208,62 @@ body { font-size:18px; }
 .ip-moat,.ai-sep::after { font-size:11px !important; }
 .nlabel-zh,.jz,.ai-z,.ip-desc-zh,.cc-body-zh,.infra-node-loc-zh,
 .cg-title-zh,.infra-stat-lbl-zh,.sz,.open-zh { font-size:14px !important; }
-/* ── MOBILE RESPONSIVE ── */
+/* ── MOBILE ── */
 @media (max-width: 768px) {
-  /* Kill the full-screen slide effect on mobile */
   .section { min-height:auto !important; }
-  .wrap { padding:48px 20px; }
-  /* Nav dots don't make sense for mobile scroll */
+  .wrap { padding:40px 18px; }
   .nav { display:none; }
 
-  .section-h { font-size:clamp(28px,7vw,42px) !important; }
-  .open-p { font-size:17px !important; }
+  /* Typography */
+  .section-h { font-size:clamp(24px,6vw,38px) !important; }
+  .open-p { font-size:17px; line-height:1.8; color:rgba(255,255,255,0.8) !important; }
 
-  /* Numbers grid: 2 columns on mobile — content over numbers */
-  .numbers-grid { grid-template-columns:1fr 1fr; }
-  .nc { padding:24px 14px; }
-  .nbig { font-size:clamp(32px,8vw,42px); letter-spacing:-1px; }
-  .nlabel { font-size:16px !important; color:rgba(255,255,255,0.55) !important; line-height:1.6 !important; }
+  /* Numbers — single column, number left + label right */
+  .numbers-grid { grid-template-columns:1fr 1fr; gap:1px; }
+  .nc { padding:22px 14px; }
+  .nbig { font-size:clamp(30px,7vw,44px); letter-spacing:-1px; }
+  .nlabel { font-size:15px; color:rgba(255,255,255,0.8) !important;
+            word-break:keep-all; overflow-wrap:anywhere; white-space:normal; }
+  .nlabel-zh { font-size:12px; white-space:normal; overflow:visible; word-break:keep-all; }
 
-  /* Infra nodes: stack — content over stats */
+  /* Infra */
   .infra-nodes { grid-template-columns:1fr; }
-  .infra-card { padding:24px 20px; }
-  .infra-stat-val { font-size:18px !important; }
-  .infra-stat-lbl { font-size:14px !important; color:rgba(255,255,255,0.45) !important; }
+  .infra-card, .sales-card { padding:22px 16px; }
+  .infra-stat-val { font-size:20px !important; }
+  .infra-stat-lbl { font-size:13px !important; color:rgba(255,255,255,0.6) !important; }
 
-  /* Sales pipeline: stack vertically */
-  .pipeline-flow { grid-template-columns:1fr; gap:12px; }
+  /* Sales pipeline — vertical cards */
+  .pipeline-flow { grid-template-columns:1fr; gap:10px; }
   .pipe-arrow { display:none; }
-  .pipe-step { padding:16px 14px; text-align:left; display:flex; gap:14px; align-items:flex-start; }
-  .pipe-icon { font-size:20px; margin-bottom:0; flex-shrink:0; }
+  .pipe-step { padding:14px; text-align:left; }
   .pipe-num { font-size:20px; }
-  .sales-card { padding:24px 20px; }
+  .pipe-sub { font-size:13px; color:rgba(255,255,255,0.75) !important; }
 
-  /* SWOT grid: stack */
+  /* SWOT + AI grid */
   .swot-grid { grid-template-columns:1fr; }
-  .sq { padding:28px 20px; }
+  .sq { padding:24px 18px; }
   .ai-grid { grid-template-columns:1fr; }
+  .jt { color:rgba(255,255,255,0.85) !important; }
+  .jd, .ai-t { color:rgba(255,255,255,0.78) !important; }
 
-  /* 5 streams: 3 then 2 */
+  /* Streams */
   .streams { grid-template-columns:repeat(3,1fr); }
 
   /* AI Century */
-  .cg-grid { grid-template-columns:1fr 1fr; }
+  .cg-grid { grid-template-columns:1fr; }
   .cc-grid { grid-template-columns:1fr; }
+  .cc-body { color:rgba(255,255,255,0.8) !important; }
 
-  /* IP grid: stack */
+  /* IP */
   .ip-grid { grid-template-columns:1fr; }
-
-  /* Nav dots: smaller */
-  .nav { right:12px; gap:10px; }
-  .nd { width:6px; height:6px; }
-
-  /* Lang bar */
-  .lb { padding:5px 10px; font-size:9px; }
+  .ip-desc { color:rgba(255,255,255,0.8) !important; }
 }
 
 @media (max-width: 480px) {
-  .wrap { padding:36px 16px; }
-  /* Single column everything on slim phones */
   .numbers-grid { grid-template-columns:1fr; }
-  .nc { padding:20px 16px; display:flex; align-items:baseline; gap:16px; }
-  .nbig { font-size:clamp(36px,9vw,48px); flex-shrink:0; }
-  .nlabel { font-size:15px !important; color:rgba(255,255,255,0.82) !important; }
+  .wrap { padding:32px 14px; }
   .streams { grid-template-columns:repeat(2,1fr); }
-  .cg-grid { grid-template-columns:1fr; }
-  .section-h { font-size:clamp(22px,7vw,34px) !important; }
-  .infra-stat-val { font-size:18px !important; }
-  .infra-stats-row { gap:20px; }
-  /* Make jurisdiction badges smaller so they wrap cleanly */
-  .infra-card span[style] { font-size:12px !important; padding:4px 10px !important; }
 }
-
 
 </style>
 </head>
