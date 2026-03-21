@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh-TW"><head>
+<html lang="zh-TW">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Titan Signal — Private Briefing · 私人簡報</title>
@@ -66,6 +67,17 @@ body { font-family:'Inter','Noto Sans TC',sans-serif; background:#030810; color:
 .si { font-size:20px; display:block; margin-bottom:8px; }
 .st { font-size:11px; font-weight:600; color:rgba(255,255,255,0.5); }
 .sz { font-family:'Noto Sans TC',sans-serif; font-size:10px; color:rgba(220,170,30,0.25); margin-top:3px; }
+
+/* INFRA BAND */
+.infra-band { margin-top:2px; background:#060d1c; border:1px solid rgba(220,170,30,0.1); border-radius:0 0 18px 18px; padding:24px 32px; display:grid; grid-template-columns:auto 1fr; gap:20px; align-items:center; }
+.infra-label { font-size:9px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:rgba(220,170,30,0.45); margin-bottom:10px; }
+.infra-nodes { display:flex; gap:28px; flex-wrap:wrap; }
+.infra-node { display:flex; align-items:center; gap:8px; }
+.infra-dot { width:6px; height:6px; border-radius:50%; background:rgba(0,220,180,0.8); box-shadow:0 0 6px rgba(0,220,180,0.5); flex-shrink:0; }
+.infra-dot.amber { background:rgba(220,170,30,0.8); box-shadow:0 0 6px rgba(220,170,30,0.4); }
+.infra-node-label { font-size:12px; color:rgba(255,255,255,0.55); }
+.infra-node-sub { font-size:10px; color:rgba(255,255,255,0.2); }
+.infra-stat { font-size:11px; color:rgba(255,255,255,0.3); line-height:1.9; border-left:1px solid rgba(255,255,255,0.05); padding-left:20px; }
 
 /* ─────────────── § 2 SWOT ─────────────── */
 #s2 { background:#030912; }
@@ -150,18 +162,13 @@ body { font-family:'Inter','Noto Sans TC',sans-serif; background:#030810; color:
 .ip-stmt-big strong { font-weight:800; color:#fff; }
 .ip-stmt-zh { font-family:'Noto Sans TC',sans-serif; font-size:13px; color:rgba(255,255,255,0.2); margin-top:10px; line-height:1.8; }
 
-/* ─────────────── § 5 CTA ─────────────── */
-#s5 { background:#030810; min-height:50vh; border-top:1px solid rgba(255,255,255,0.04); }
-.cta-h { font-size:clamp(36px,5vw,64px); font-weight:200; letter-spacing:-2px; line-height:1.1; margin-bottom:10px; }
-.cta-h em { font-style:normal; font-weight:900; }
-.cta-h-zh { font-family:'Noto Sans TC',sans-serif; font-size:clamp(18px,2.5vw,28px); color:rgba(255,255,255,0.2); margin-bottom:32px; }
-.foot-row { display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px; padding-top:40px; border-top:1px solid rgba(255,255,255,0.04); margin-top:40px; }
-.foot-l { font-family:'Inter',sans-serif; }
-.foot-l .fn { font-size:20px; font-weight:700; }
-.foot-l .fr { font-size:12px; color:rgba(255,255,255,0.25); margin-top:5px; line-height:1.7; }
-.foot-l .fz { font-family:'Noto Sans TC',sans-serif; font-size:11px; color:rgba(220,170,30,0.3); }
-.foot-l .fe { font-size:14px; color:rgba(220,170,30,0.6); margin-top:10px; }
-.foot-r { text-align:right; font-size:10px; color:rgba(255,255,255,0.12); line-height:2; }
+.thankyou { margin-top:52px; padding-top:40px; border-top:1px solid rgba(255,255,255,0.05); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px; }
+.ty-msg { font-size:16px; font-weight:300; color:rgba(255,255,255,0.45); line-height:1.85; max-width:520px; }
+.ty-msg-zh { font-family:'Noto Sans TC',sans-serif; font-size:13px; color:rgba(255,255,255,0.18); margin-top:8px; line-height:1.9; }
+.ty-sig .fn { font-size:18px; font-weight:700; text-align:right; }
+.ty-sig .fr { font-size:11px; color:rgba(255,255,255,0.25); margin-top:4px; line-height:1.7; text-align:right; }
+.ty-sig .fz { font-family:'Noto Sans TC',sans-serif; font-size:11px; color:rgba(220,170,30,0.3); text-align:right; }
+.ty-sig .fe { font-size:11px; color:rgba(255,255,255,0.12); margin-top:8px; text-align:right; letter-spacing:0.3px; }
 </style>
 </head>
 <body>
@@ -176,11 +183,10 @@ body { font-family:'Inter','Noto Sans TC',sans-serif; background:#030810; color:
 </div>
 
 <div class="nav-dots" id="navDots">
-  <div class="nd" onclick="go('s1')" title="Record"></div>
-  <div class="nd active" onclick="go('s2')" title="SWOT"></div>
+  <div class="nd active" onclick="go('s1')" title="Record"></div>
+  <div class="nd" onclick="go('s2')" title="SWOT"></div>
   <div class="nd" onclick="go('s3')" title="AI Century"></div>
   <div class="nd" onclick="go('s4')" title="IP"></div>
-  <div class="nd" onclick="go('s5')" title="Contact"></div>
 </div>
 
 <!-- ═══════ §1 COVER + NUMBERS ═══════ -->
@@ -204,8 +210,8 @@ body { font-family:'Inter','Noto Sans TC',sans-serif; background:#030810; color:
     <div class="to-role">日盛國際租賃 · 日盛投信 · 董事長<br><span style="opacity:0.5;">Chairman · Jih Sun International Leasing & Jih Sun Securities Investment Trust</span></div>
   </div>
 
-  <div class="open-p">Because of our family relationship — <strong>I want to show you what is running right now.</strong> Not a concept. A living system.</div>
-  <div class="open-zh zh-t">基於我們的家族關係——我想讓您看到現在正在運行的系統。不是概念，而是一個活的系統。</div>
+  <div class="open-p">Thank you for taking the time to review Titan Signal AI Foundry. <strong>What follows is a factual record of what exists and operates right now.</strong> Not a concept. A living system.</div>
+  <div class="open-zh zh-t">感謝您撥出寶貴時間審閱Titan Signal AI Foundry。以下是現已存在並正在運行的事實記錄。不是概念，而是一個活的系統。</div>
 
   <div class="numbers-grid">
     <div class="nc"><div class="nbig">230<span class="suf">+</span></div><div class="nlabel">Autonomous AI systems, 24/7</div><div class="nlabel-zh zh-t">自主AI系統，全天候</div><span class="ntag">LIVE NOW</span></div>
@@ -223,15 +229,40 @@ body { font-family:'Inter','Noto Sans TC',sans-serif; background:#030810; color:
     <div class="sc"><span class="si">🎮</span><div class="st">iGaming</div><div class="sz zh-t">電子博弈</div></div>
     <div class="sc"><span class="si">📱</span><div class="st">Mobile AI</div><div class="sz zh-t">AI移動端</div></div>
   </div>
+
+  <!-- INFRASTRUCTURE BAND -->
+  <div class="infra-band">
+    <div>
+      <div class="infra-label">Private Infrastructure · 私有基礎設施</div>
+      <div class="infra-nodes">
+        <div class="infra-node">
+          <div class="infra-dot"></div>
+          <div><div class="infra-node-label">VPS-1 · Contabo Europe</div><div class="infra-node-sub">Primary execution node · 歐洲主執行節點</div></div>
+        </div>
+        <div class="infra-node">
+          <div class="infra-dot"></div>
+          <div><div class="infra-node-label">VPS-2 · Offshore Relay</div><div class="infra-node-sub">Dedicated trading relay · 離岸交易中繼</div></div>
+        </div>
+        <div class="infra-node">
+          <div class="infra-dot amber"></div>
+          <div><div class="infra-node-label">Solana On-Chain Vault</div><div class="infra-node-sub">Smart contract execution · 智能合約執行</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="infra-stat">
+      Sub-14ms execution · Zero cloud dependency · Private data — no custodial risk<br>
+      <span class="zh-t" style="font-family:'Noto Sans TC',sans-serif; font-size:10px; color:rgba(255,255,255,0.15);">14毫秒內執行 · 零雲依賴 · 私有數據，無託管風險</span>
+    </div>
+  </div>
 </div>
 </div>
 
 <!-- ═══════ §2 SWOT ═══════ -->
 <div class="section" id="s2">
 <div class="wrap">
-  <div class="eyebrow">Strategic Analysis · 戰略分析</div>
-  <div class="section-h">We ran your <strong>SWOT.</strong><br>Then we solved it.</div>
-  <div class="section-h-zh zh-t">我們分析了您的SWOT——然後每一項都有了答案。</div>
+  <div class="eyebrow">AI Strategic Assessment · 策略AI評估</div>
+  <div class="section-h">Where AI Creates<br><strong>the Strategic Advantage.</strong></div>
+  <div class="section-h-zh zh-t">跨越每個戰略維度的AI優勢分析</div>
 
   <div class="swot-grid">
     <!-- S -->
@@ -292,6 +323,7 @@ body { font-family:'Inter','Noto Sans TC',sans-serif; background:#030810; color:
       <div class="cg-title">The Industrial Century</div>
       <div class="cg-title-zh zh-t">工業世紀</div>
       <div class="cg-who">Steel. Oil. Manufacturing.<br>Those who owned the physical layer won.</div>
+      <div class="cg-who zh-t" style="font-family:'Noto Sans TC',sans-serif; display:none;">鋼鐵。石油。製造業。掌控實體層者勝出。</div>
       <div class="cg-tag cg-tag-past">Concluded · 已過去</div>
     </div>
     <div class="cg-cell">
@@ -300,6 +332,7 @@ body { font-family:'Inter','Noto Sans TC',sans-serif; background:#030810; color:
       <div class="cg-title">The Semiconductor Century</div>
       <div class="cg-title-zh zh-t">半導體世紀 — 台灣制勝</div>
       <div class="cg-who">TSMC. ASML. Intel.<br>Taiwan won by owning the fabrication layer.</div>
+      <div class="cg-who zh-t" style="font-family:'Noto Sans TC',sans-serif; display:none;">台積電。ASML。英特爾。台灣通過掌控晶圓廠層勝出。</div>
       <div class="cg-tag cg-tag-past">Maturing · 成熟期</div>
     </div>
     <div class="cg-cell" style="border:1px solid rgba(220,170,30,0.2); background:#07101e;">
@@ -308,6 +341,7 @@ body { font-family:'Inter','Noto Sans TC',sans-serif; background:#030810; color:
       <div class="cg-title active">The AI Intelligence Century</div>
       <div class="cg-title-zh active zh-t">AI智能世紀</div>
       <div class="cg-who active">Autonomous intelligence infrastructure.<br>Those who own the intelligence layer will win.</div>
+      <div class="cg-who active zh-t" style="font-family:'Noto Sans TC',sans-serif; display:none;">自主智能基礎設施。掌控智能層者勝出。</div>
       <div class="cg-tag cg-tag-now">TITAN SIGNAL · NOW</div>
     </div>
   </div>
@@ -436,7 +470,7 @@ function setL(l) {
   }
 }
 function go(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
-const sections=['s1','s2','s3','s4','s5'];
+const sections=['s1','s2','s3','s4'];
 const dots=document.querySelectorAll('.nd');
 window.addEventListener('scroll',()=>{
   const mid=window.innerHeight/2;
@@ -450,4 +484,5 @@ window.addEventListener('scroll',()=>{
   });
 });
 </script>
-</body></html>
+</body>
+</html>
