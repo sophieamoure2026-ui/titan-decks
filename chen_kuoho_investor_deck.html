@@ -94,7 +94,15 @@ body { font-family:'Inter','Noto Sans TC',sans-serif; background:#030810; color:
 .infra-stat-lbl { font-size:12px; color:rgba(255,255,255,0.3); }
 .infra-stat-lbl-zh { font-family:"Noto Sans TC",sans-serif; font-size:10px; color:rgba(220,170,30,0.25); }
 
-/* ─────────────── § 2 SWOT ─────────────── */
+/* SALES PIPELINE */
+.sales-card { margin-top:20px; background:#060d1c; border:1px solid rgba(220,170,30,0.12); border-radius:18px; padding:32px 36px; }
+.pipeline-flow { display:grid; grid-template-columns:1fr auto 1fr auto 1fr auto 1fr; gap:0; align-items:center; margin:24px 0; }
+.pipe-step { background:#04091a; border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:18px 16px; text-align:center; }
+.pipe-icon { font-size:22px; margin-bottom:8px; }
+.pipe-label { font-size:14px; font-weight:700; color:#fff; margin-bottom:4px; }
+.pipe-sub { font-size:12px; color:rgba(255,255,255,0.35); line-height:1.5; }
+.pipe-arrow { font-size:20px; color:rgba(220,170,30,0.35); text-align:center; padding:0 8px; }
+.pipe-num { font-size:22px; font-weight:900; color:rgba(0,220,180,0.8); letter-spacing:-0.5px; }
 #s2 { background:#030912; }
 .swot-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.05); border-radius:18px; overflow:hidden; margin-top:28px; }
 .sq { padding:36px 32px; position:relative; }
@@ -256,46 +264,93 @@ body { font-size:18px; }
   <!-- INFRASTRUCTURE CARD -->
   <div class="infra-card">
     <div class="infra-header">
-      <div class="infra-eyebrow">Private Infrastructure · 私有基礎設施</div>
-      <div class="infra-live-tag"><span></span>All Nodes Live</div>
+      <div class="infra-eyebrow">Offshore Relay Mesh &middot; 离岸中繼網絡</div>
+      <div class="infra-live-tag"><span></span>All Jurisdictions Active</div>
     </div>
+    <div style="font-size:18px;color:rgba(255,255,255,0.5);line-height:1.75;margin-bottom:22px;">Every trade routes through a <strong style="color:rgba(255,255,255,0.85);">13-jurisdiction sovereign relay mesh</strong> &mdash; randomly rotating per execution. Exchanges see no origin. Zero custodial footprint.</div>
     <div class="infra-nodes">
       <div class="infra-node">
-        <div class="infra-dot-row"><div class="infra-dot"></div><div class="infra-status">Online</div></div>
-        <div class="infra-node-name">VPS-1 · Primary</div>
-        <div class="infra-node-loc">Contabo · Frankfurt, EU</div>
-        <div class="infra-node-loc-zh zh-t">法蘭克福 · 歐洲主節點</div>
-        <div class="infra-node-role">230+ daemon orchestration<br>Main execution &amp; control layer</div>
+        <div class="infra-dot-row"><div class="infra-dot"></div><div class="infra-status">Active</div></div>
+        <div class="infra-node-name">BVI &middot; Cayman Islands</div>
+        <div class="infra-node-role">Zero-tax execution hub<br>Primary capital structuring</div>
       </div>
       <div class="infra-node">
-        <div class="infra-dot-row"><div class="infra-dot"></div><div class="infra-status">Online</div></div>
-        <div class="infra-node-name">VPS-2 · Offshore Relay</div>
-        <div class="infra-node-loc">Dedicated · Private Routing</div>
-        <div class="infra-node-loc-zh zh-t">離岸 · 私有路由中繼</div>
-        <div class="infra-node-role">77 trading bots · Sub-14ms execution<br>Zero cloud — fully private</div>
+        <div class="infra-dot-row"><div class="infra-dot"></div><div class="infra-status">Active</div></div>
+        <div class="infra-node-name">Singapore &middot; UAE &middot; Switzerland</div>
+        <div class="infra-node-role">Asia-Pacific &amp; EMEA relay<br>Institutional-grade routing</div>
       </div>
       <div class="infra-node amber">
-        <div class="infra-dot-row"><div class="infra-dot amber"></div><div class="infra-status amber">Active</div></div>
+        <div class="infra-dot-row"><div class="infra-dot amber"></div><div class="infra-status amber">Settlement</div></div>
         <div class="infra-node-name">Solana On-Chain Vault</div>
-        <div class="infra-node-loc">Smart Contract Layer</div>
-        <div class="infra-node-loc-zh zh-t">智能合約層 · 鏈上資金庫</div>
         <div class="infra-node-role">Non-custodial settlement<br>Autonomous capital allocation</div>
       </div>
     </div>
+    <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;">
+      <span style="padding:5px 14px;background:rgba(0,220,180,0.07);border:1px solid rgba(0,220,180,0.2);border-radius:100px;font-size:14px;color:rgba(0,220,180,0.7);">&#127464;&#127468; BVI</span>
+      <span style="padding:5px 14px;background:rgba(0,220,180,0.07);border:1px solid rgba(0,220,180,0.2);border-radius:100px;font-size:14px;color:rgba(0,220,180,0.7);">&#127472;&#127486; Cayman</span>
+      <span style="padding:5px 14px;background:rgba(0,220,180,0.07);border:1px solid rgba(0,220,180,0.2);border-radius:100px;font-size:14px;color:rgba(0,220,180,0.7);">&#127480;&#127468; Singapore</span>
+      <span style="padding:5px 14px;background:rgba(0,220,180,0.07);border:1px solid rgba(0,220,180,0.2);border-radius:100px;font-size:14px;color:rgba(0,220,180,0.7);">&#127462;&#127466; UAE</span>
+      <span style="padding:5px 14px;background:rgba(0,220,180,0.07);border:1px solid rgba(0,220,180,0.2);border-radius:100px;font-size:14px;color:rgba(0,220,180,0.7);">&#127464;&#127469; Switzerland</span>
+      <span style="padding:5px 14px;background:rgba(0,220,180,0.07);border:1px solid rgba(0,220,180,0.2);border-radius:100px;font-size:14px;color:rgba(0,220,180,0.7);">&#127471;&#127477; Japan</span>
+      <span style="padding:5px 14px;background:rgba(220,170,30,0.1);border:1px solid rgba(220,170,30,0.3);border-radius:100px;font-size:14px;color:rgba(220,170,30,0.8);">&#127481;&#127484; Taiwan</span>
+      <span style="padding:5px 14px;background:rgba(0,220,180,0.07);border:1px solid rgba(0,220,180,0.2);border-radius:100px;font-size:14px;color:rgba(0,220,180,0.7);">&#127480;&#127462; Saudi Arabia</span>
+      <span style="padding:5px 14px;background:rgba(0,220,180,0.07);border:1px solid rgba(0,220,180,0.2);border-radius:100px;font-size:14px;color:rgba(0,220,180,0.7);">&#127468;&#127463; UK</span>
+      <span style="padding:5px 14px;background:rgba(0,220,180,0.07);border:1px solid rgba(0,220,180,0.2);border-radius:100px;font-size:14px;color:rgba(0,220,180,0.7);">&#127477;&#127462; Panama</span>
+      <span style="padding:5px 14px;background:rgba(0,220,180,0.07);border:1px solid rgba(0,220,180,0.2);border-radius:100px;font-size:14px;color:rgba(0,220,180,0.7);">&#127462;&#127482; Australia</span>
+      <span style="padding:5px 14px;background:rgba(0,220,180,0.07);border:1px solid rgba(0,220,180,0.2);border-radius:100px;font-size:14px;color:rgba(0,220,180,0.7);">&#127796; Caribbean</span>
+    </div>
     <div class="infra-stats-row">
+      <div class="infra-stat-item"><div class="infra-stat-val">13</div><div class="infra-stat-lbl">Sovereign jurisdictions</div><div class="infra-stat-lbl-zh zh-t">司法管轄區</div></div>
       <div class="infra-stat-item"><div class="infra-stat-val">&lt;14ms</div><div class="infra-stat-lbl">Execution speed</div><div class="infra-stat-lbl-zh zh-t">執行速度</div></div>
-      <div class="infra-stat-item"><div class="infra-stat-val">0%</div><div class="infra-stat-lbl">Cloud dependency</div><div class="infra-stat-lbl-zh zh-t">雲依賴</div></div>
-      <div class="infra-stat-item"><div class="infra-stat-val">100%</div><div class="infra-stat-lbl">Private data — no custodial risk</div><div class="infra-stat-lbl-zh zh-t">私有數據，無託管風險</div></div>
-      <div class="infra-stat-item"><div class="infra-stat-val">24/7</div><div class="infra-stat-lbl">Uptime · autonomous recovery</div><div class="infra-stat-lbl-zh zh-t">全天候 · 自動恢復</div></div>
+      <div class="infra-stat-item"><div class="infra-stat-val">0%</div><div class="infra-stat-lbl">Exchange origin visibility</div><div class="infra-stat-lbl-zh zh-t">交易所來源可見度</div></div>
+      <div class="infra-stat-item"><div class="infra-stat-val">24/7</div><div class="infra-stat-lbl">Autonomous rotation</div><div class="infra-stat-lbl-zh zh-t">自主輪換</div></div>
     </div>
   </div>
 
   <div class="streams">
-    <div class="sc"><span class="si">📈</span><div class="st">Trading</div><div class="sz zh-t">量化交易</div></div>
-    <div class="sc"><span class="si">🎯</span><div class="st">Lead Intel</div><div class="sz zh-t">商業情報</div></div>
-    <div class="sc"><span class="si">⚡</span><div class="st">Signal SaaS</div><div class="sz zh-t">信號訂閱</div></div>
-    <div class="sc"><span class="si">🎮</span><div class="st">iGaming</div><div class="sz zh-t">電子博弈</div></div>
-    <div class="sc"><span class="si">📱</span><div class="st">Mobile AI</div><div class="sz zh-t">AI移動端</div></div>
+    <div class="sc"><span class="si">&#128200;</span><div class="st">Trading</div><div class="sz zh-t">量化交易</div></div>
+    <div class="sc"><span class="si">&#127919;</span><div class="st">Lead Intel</div><div class="sz zh-t">商業情報</div></div>
+    <div class="sc"><span class="si">&#9889;</span><div class="st">Signal SaaS</div><div class="sz zh-t">信號訂閱</div></div>
+    <div class="sc"><span class="si">&#127918;</span><div class="st">iGaming</div><div class="sz zh-t">電子博弈</div></div>
+    <div class="sc"><span class="si">&#128241;</span><div class="st">Mobile AI</div><div class="sz zh-t">AI移動端</div></div>
+  </div>
+
+  <!-- AI SALES PIPELINE -->
+  <div class="sales-card">
+    <div class="infra-header">
+      <div class="infra-eyebrow">AI Sales Engine &middot; AI销售引擎</div>
+      <div class="infra-live-tag"><span></span>Running 24/7 &middot; Zero headcount</div>
+    </div>
+    <div style="font-size:18px;color:rgba(255,255,255,0.5);line-height:1.75;margin-bottom:24px;">A fully autonomous B2B sales pipeline &mdash; from lead sourcing through BANT qualification, personalized outreach, and buyer conversion &mdash; <strong style="color:rgba(255,255,255,0.85);">without a single human touch.</strong> <span class="zh-t" style="font-family:'Noto Sans TC',sans-serif;font-size:14px;color:rgba(255,255,255,0.2);">&#20840;&#33258;&#21205;B2B&#37319;&#36092;&#27969;&#31243;&#65292;&#28961;&#20154;&#24037;&#12290;</span></div>
+    <div class="pipeline-flow">
+      <div class="pipe-step">
+        <div class="pipe-icon">&#129302;</div>
+        <div class="pipe-num">92K</div>
+        <div class="pipe-label">Harvest</div>
+        <div class="pipe-sub">AI scrapes verified B2B decision-makers daily across energy, mining, finance &amp; tech</div>
+      </div>
+      <div class="pipe-arrow">&rarr;</div>
+      <div class="pipe-step">
+        <div class="pipe-icon">&#127919;</div>
+        <div class="pipe-num">BANT</div>
+        <div class="pipe-label">Qualify</div>
+        <div class="pipe-sub">AI IVR call center screens Budget, Authority, Need &amp; Timeline. Only qualified leads advance</div>
+      </div>
+      <div class="pipe-arrow">&rarr;</div>
+      <div class="pipe-step">
+        <div class="pipe-icon">&#128140;</div>
+        <div class="pipe-num">5,300</div>
+        <div class="pipe-label">Outreach</div>
+        <div class="pipe-sub">Personalized email sequences + SMS re-engagement drips sent daily via dual SMTP relay</div>
+      </div>
+      <div class="pipe-arrow">&rarr;</div>
+      <div class="pipe-step">
+        <div class="pipe-icon">&#128176;</div>
+        <div class="pipe-num">B2B</div>
+        <div class="pipe-label">Convert</div>
+        <div class="pipe-sub">Verified leads sold to buyer network: agencies, operators &amp; enterprise clients</div>
+      </div>
+    </div>
   </div>
 </div>
 </div>
