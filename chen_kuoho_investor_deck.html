@@ -68,16 +68,31 @@ body { font-family:'Inter','Noto Sans TC',sans-serif; background:#030810; color:
 .st { font-size:11px; font-weight:600; color:rgba(255,255,255,0.5); }
 .sz { font-family:'Noto Sans TC',sans-serif; font-size:10px; color:rgba(220,170,30,0.25); margin-top:3px; }
 
-/* INFRA BAND */
-.infra-band { margin-top:2px; background:#060d1c; border:1px solid rgba(220,170,30,0.1); border-radius:0 0 18px 18px; padding:24px 32px; display:grid; grid-template-columns:auto 1fr; gap:20px; align-items:center; }
-.infra-label { font-size:9px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:rgba(220,170,30,0.45); margin-bottom:10px; }
-.infra-nodes { display:flex; gap:28px; flex-wrap:wrap; }
-.infra-node { display:flex; align-items:center; gap:8px; }
-.infra-dot { width:6px; height:6px; border-radius:50%; background:rgba(0,220,180,0.8); box-shadow:0 0 6px rgba(0,220,180,0.5); flex-shrink:0; }
-.infra-dot.amber { background:rgba(220,170,30,0.8); box-shadow:0 0 6px rgba(220,170,30,0.4); }
-.infra-node-label { font-size:12px; color:rgba(255,255,255,0.55); }
-.infra-node-sub { font-size:10px; color:rgba(255,255,255,0.2); }
-.infra-stat { font-size:11px; color:rgba(255,255,255,0.3); line-height:1.9; border-left:1px solid rgba(255,255,255,0.05); padding-left:20px; }
+/* INFRA CARD */
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.55;transform:scale(1.5);} }
+.infra-card { margin-top:20px; background:#060d1c; border:1px solid rgba(220,170,30,0.18); border-radius:18px; padding:32px 36px; }
+.infra-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+.infra-eyebrow { font-size:9px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:rgba(220,170,30,0.55); }
+.infra-live-tag { display:flex; align-items:center; gap:6px; font-size:9px; font-weight:700; letter-spacing:2px; color:rgba(0,220,180,0.8); text-transform:uppercase; }
+.infra-live-tag span { width:7px; height:7px; border-radius:50%; background:rgba(0,220,180,1); animation:pulse 1.8s ease-in-out infinite; display:inline-block; }
+.infra-nodes { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.infra-node { background:#04091a; border:1px solid rgba(255,255,255,0.05); border-radius:12px; padding:20px 20px; position:relative; }
+.infra-node::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; border-radius:12px 12px 0 0; background:linear-gradient(90deg,rgba(0,220,180,0.5),transparent); }
+.infra-node.amber::before { background:linear-gradient(90deg,rgba(220,170,30,0.5),transparent); }
+.infra-dot-row { display:flex; align-items:center; gap:7px; margin-bottom:10px; }
+.infra-dot { width:7px; height:7px; border-radius:50%; background:rgba(0,220,180,1); box-shadow:0 0 8px rgba(0,220,180,0.6); animation:pulse 2s ease-in-out infinite; flex-shrink:0; }
+.infra-dot.amber { background:rgba(220,170,30,1); box-shadow:0 0 8px rgba(220,170,30,0.5); animation-delay:.6s; }
+.infra-status { font-size:9px; font-weight:700; letter-spacing:1.5px; color:rgba(0,220,180,0.6); text-transform:uppercase; }
+.infra-status.amber { color:rgba(220,170,30,0.6); }
+.infra-node-name { font-size:14px; font-weight:700; color:#fff; margin-bottom:3px; }
+.infra-node-loc { font-size:11px; color:rgba(255,255,255,0.35); margin-bottom:8px; }
+.infra-node-loc-zh { font-family:"Noto Sans TC",sans-serif; font-size:9px; color:rgba(255,255,255,0.15); }
+.infra-node-role { font-size:11px; color:rgba(255,255,255,0.45); line-height:1.5; }
+.infra-stats-row { margin-top:22px; padding-top:18px; border-top:1px solid rgba(255,255,255,0.05); display:flex; gap:32px; flex-wrap:wrap; }
+.infra-stat-item { display:flex; flex-direction:column; gap:3px; }
+.infra-stat-val { font-size:18px; font-weight:800; color:#fff; letter-spacing:-0.5px; }
+.infra-stat-lbl { font-size:10px; color:rgba(255,255,255,0.3); }
+.infra-stat-lbl-zh { font-family:"Noto Sans TC",sans-serif; font-size:9px; color:rgba(220,170,30,0.25); }
 
 /* ─────────────── § 2 SWOT ─────────────── */
 #s2 { background:#030912; }
@@ -222,37 +237,49 @@ body { font-family:'Inter','Noto Sans TC',sans-serif; background:#030810; color:
     <div class="nc"><div class="nbig">5<span class="suf">K</span></div><div class="nlabel">AI emails sent daily. Zero humans.</div><div class="nlabel-zh zh-t">AI每日發電郵，零人工</div><span class="ntag">AUTONOMOUS</span></div>
   </div>
 
+  <!-- INFRASTRUCTURE CARD -->
+  <div class="infra-card">
+    <div class="infra-header">
+      <div class="infra-eyebrow">Private Infrastructure · 私有基礎設施</div>
+      <div class="infra-live-tag"><span></span>All Nodes Live</div>
+    </div>
+    <div class="infra-nodes">
+      <div class="infra-node">
+        <div class="infra-dot-row"><div class="infra-dot"></div><div class="infra-status">Online</div></div>
+        <div class="infra-node-name">VPS-1 · Primary</div>
+        <div class="infra-node-loc">Contabo · Frankfurt, EU</div>
+        <div class="infra-node-loc-zh zh-t">法蘭克福 · 歐洲主節點</div>
+        <div class="infra-node-role">230+ daemon orchestration<br>Main execution &amp; control layer</div>
+      </div>
+      <div class="infra-node">
+        <div class="infra-dot-row"><div class="infra-dot"></div><div class="infra-status">Online</div></div>
+        <div class="infra-node-name">VPS-2 · Offshore Relay</div>
+        <div class="infra-node-loc">Dedicated · Private Routing</div>
+        <div class="infra-node-loc-zh zh-t">離岸 · 私有路由中繼</div>
+        <div class="infra-node-role">77 trading bots · Sub-14ms execution<br>Zero cloud — fully private</div>
+      </div>
+      <div class="infra-node amber">
+        <div class="infra-dot-row"><div class="infra-dot amber"></div><div class="infra-status amber">Active</div></div>
+        <div class="infra-node-name">Solana On-Chain Vault</div>
+        <div class="infra-node-loc">Smart Contract Layer</div>
+        <div class="infra-node-loc-zh zh-t">智能合約層 · 鏈上資金庫</div>
+        <div class="infra-node-role">Non-custodial settlement<br>Autonomous capital allocation</div>
+      </div>
+    </div>
+    <div class="infra-stats-row">
+      <div class="infra-stat-item"><div class="infra-stat-val">&lt;14ms</div><div class="infra-stat-lbl">Execution speed</div><div class="infra-stat-lbl-zh zh-t">執行速度</div></div>
+      <div class="infra-stat-item"><div class="infra-stat-val">0%</div><div class="infra-stat-lbl">Cloud dependency</div><div class="infra-stat-lbl-zh zh-t">雲依賴</div></div>
+      <div class="infra-stat-item"><div class="infra-stat-val">100%</div><div class="infra-stat-lbl">Private data — no custodial risk</div><div class="infra-stat-lbl-zh zh-t">私有數據，無託管風險</div></div>
+      <div class="infra-stat-item"><div class="infra-stat-val">24/7</div><div class="infra-stat-lbl">Uptime · autonomous recovery</div><div class="infra-stat-lbl-zh zh-t">全天候 · 自動恢復</div></div>
+    </div>
+  </div>
+
   <div class="streams">
     <div class="sc"><span class="si">📈</span><div class="st">Trading</div><div class="sz zh-t">量化交易</div></div>
     <div class="sc"><span class="si">🎯</span><div class="st">Lead Intel</div><div class="sz zh-t">商業情報</div></div>
     <div class="sc"><span class="si">⚡</span><div class="st">Signal SaaS</div><div class="sz zh-t">信號訂閱</div></div>
     <div class="sc"><span class="si">🎮</span><div class="st">iGaming</div><div class="sz zh-t">電子博弈</div></div>
     <div class="sc"><span class="si">📱</span><div class="st">Mobile AI</div><div class="sz zh-t">AI移動端</div></div>
-  </div>
-
-  <!-- INFRASTRUCTURE BAND -->
-  <div class="infra-band">
-    <div>
-      <div class="infra-label">Private Infrastructure · 私有基礎設施</div>
-      <div class="infra-nodes">
-        <div class="infra-node">
-          <div class="infra-dot"></div>
-          <div><div class="infra-node-label">VPS-1 · Contabo Europe</div><div class="infra-node-sub">Primary execution node · 歐洲主執行節點</div></div>
-        </div>
-        <div class="infra-node">
-          <div class="infra-dot"></div>
-          <div><div class="infra-node-label">VPS-2 · Offshore Relay</div><div class="infra-node-sub">Dedicated trading relay · 離岸交易中繼</div></div>
-        </div>
-        <div class="infra-node">
-          <div class="infra-dot amber"></div>
-          <div><div class="infra-node-label">Solana On-Chain Vault</div><div class="infra-node-sub">Smart contract execution · 智能合約執行</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="infra-stat">
-      Sub-14ms execution · Zero cloud dependency · Private data — no custodial risk<br>
-      <span class="zh-t" style="font-family:'Noto Sans TC',sans-serif; font-size:10px; color:rgba(255,255,255,0.15);">14毫秒內執行 · 零雲依賴 · 私有數據，無託管風險</span>
-    </div>
   </div>
 </div>
 </div>
