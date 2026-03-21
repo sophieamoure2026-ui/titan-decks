@@ -262,19 +262,22 @@ body { font-size:18px; }
   .lb { padding:5px 10px; font-size:9px; }
 }
 
-@media (max-width: 420px) {
-  .wrap { padding:48px 16px; }
+@media (max-width: 480px) {
+  .wrap { padding:36px 16px; }
+  /* Single column everything on slim phones */
   .numbers-grid { grid-template-columns:1fr; }
+  .nc { padding:20px 16px; display:flex; align-items:baseline; gap:16px; }
+  .nbig { font-size:clamp(36px,9vw,48px); flex-shrink:0; }
+  .nlabel { font-size:15px !important; color:rgba(255,255,255,0.82) !important; }
   .streams { grid-template-columns:repeat(2,1fr); }
-  .section-h { font-size:clamp(24px,8vw,36px) !important; }
-  .jt, .ai-t, .ip-desc, .cc-body, .open-p, .infra-node-role { font-size:16px !important; }
-  .infra-stat-val { font-size:20px !important; }
-  /* Brighten everything for phone screens */
-  .jt, .ai-t, .ip-desc, .cc-body, .cg-who,
-  .infra-node-role, .pipe-sub, .nlabel,
-  .open-p { color:rgba(255,255,255,0.88) !important; }
-  .infra-stat-lbl { color:rgba(255,255,255,0.6) !important; }
+  .cg-grid { grid-template-columns:1fr; }
+  .section-h { font-size:clamp(22px,7vw,34px) !important; }
+  .infra-stat-val { font-size:18px !important; }
+  .infra-stats-row { gap:20px; }
+  /* Make jurisdiction badges smaller so they wrap cleanly */
+  .infra-card span[style] { font-size:12px !important; padding:4px 10px !important; }
 }
+
 
 </style>
 </head>
