@@ -210,7 +210,12 @@ body { font-size:18px; }
 .cg-title-zh,.infra-stat-lbl-zh,.sz,.open-zh { font-size:14px !important; }
 /* ── MOBILE RESPONSIVE ── */
 @media (max-width: 768px) {
-  .wrap { padding:60px 20px; }
+  /* Kill the full-screen slide effect on mobile */
+  .section { min-height:auto !important; }
+  .wrap { padding:48px 20px; }
+  /* Nav dots don't make sense for mobile scroll */
+  .nav { display:none; }
+
   .section-h { font-size:clamp(28px,7vw,42px) !important; }
   .open-p { font-size:17px !important; }
 
