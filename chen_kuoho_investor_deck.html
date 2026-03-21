@@ -214,14 +214,17 @@ body { font-size:18px; }
   .section-h { font-size:clamp(28px,7vw,42px) !important; }
   .open-p { font-size:17px !important; }
 
-  /* Numbers grid: 2 columns on mobile */
+  /* Numbers grid: 2 columns on mobile — content over numbers */
   .numbers-grid { grid-template-columns:1fr 1fr; }
-  .nc { padding:28px 16px; }
-  .nbig { font-size:clamp(40px,10vw,60px); }
+  .nc { padding:24px 14px; }
+  .nbig { font-size:clamp(32px,8vw,42px); letter-spacing:-1px; }
+  .nlabel { font-size:16px !important; color:rgba(255,255,255,0.55) !important; line-height:1.6 !important; }
 
-  /* Infra nodes: stack */
+  /* Infra nodes: stack — content over stats */
   .infra-nodes { grid-template-columns:1fr; }
   .infra-card { padding:24px 20px; }
+  .infra-stat-val { font-size:18px !important; }
+  .infra-stat-lbl { font-size:14px !important; color:rgba(255,255,255,0.45) !important; }
 
   /* Sales pipeline: stack vertically */
   .pipeline-flow { grid-template-columns:1fr; gap:12px; }
