@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titan Signal AI Foundry — Private Investment Opportunity | 私人投資機會</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --navy: #050d1a;
+        --navy2: #0a1628;
+        --navy3: #0d1e35;
+        --blue: #1a6aff;
+        --cyan: #00c8ff;
+        --teal: #00e5c8;
+        --gold: #f0b429;
+        --red: #ff4560;
+        --white: #ffffff;
+        --gray: #8a9ab5;
+        --card-bg: rgba(255,255,255,0.04);
+        --card-border: rgba(0,200,255,0.15);
+        --gold-border: rgba(240,180,41,0.3);
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: 'Inter', 'Noto Sans TC', sans-serif;
+        background: var(--navy);
+        color: var(--white);
+        min-height: 100vh;
+      }
+      .lang-toggle {
+        position: fixed; top: 20px; right: 24px; z-index: 100;
+        display: flex; gap: 2px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 8px; padding: 4px;
+      }
+      .lang-btn {
+        padding: 5px 14px; border: none; background: transparent;
+        color: var(--gray); font-size: 12px; font-weight: 600;
+        border-radius: 5px; cursor: pointer; transition: all 0.2s;
+      }
+      .lang-btn.active { background: var(--gold); color: #050d1a; }
+      .bg-glow { position: fixed; border-radius: 50%; filter: blur(160px); pointer-events: none; z-index: 0; }
+      .g1 { width: 700px; height: 700px; background: rgba(240,180,41,0.06); top: -200px; right: -200px; }
+      .g2 { width: 500px; height: 500px; background: rgba(0,229,200,0.05); bottom: 0; left: -100px; }
+      .g3 { width: 400px; height: 400px; background: rgba(26,106,255,0.07); top: 40%; left: 30%; }
+      .page {
+        max-width: 880px; margin: 0 auto;
+        padding: 64px 60px; position: relative; z-index: 1;
+      }
+      .letterhead {
+        display: flex; justify-content: space-between; align-items: flex-start;
+        padding-bottom: 28px;
+        border-bottom: 1px solid var(--gold-border);
+        margin-bottom: 44px;
+      }
+      .logo-text {
+        font-size: 22px; font-weight: 900; letter-spacing: 1px;
+        background: linear-gradient(90deg, #fff 0%, var(--gold) 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .logo-sub { font-size: 11px; color: var(--gray); margin-top: 3px; letter-spacing: 1.5px; text-transform: uppercase; }
+      .letterhead-right { text-align: right; font-size: 12px; color: var(--gray); line-height: 1.8; }
+      .conf {
+        display: inline-block; padding: 3px 10px;
+        background: rgba(240,180,41,0.1); border: 1px solid rgba(240,180,41,0.3);
+        border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 2px;
+        text-transform: uppercase; color: var(--gold); margin-bottom: 8px;
+      }
+      .to-block { margin-bottom: 36px; }
+      .to-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+      .to-name { font-size: 20px; font-weight: 800; color: white; margin-bottom: 2px; }
+      .to-title { font-size: 13px; color: var(--gray); }
+      .salutation { font-size: 16px; font-weight: 600; margin-bottom: 10px; color: white; }
+      .salutation-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 14px; color: var(--gold); margin-bottom: 28px; }
+      .body-text { font-size: 15px; line-height: 1.85; color: rgba(255,255,255,0.82); margin-bottom: 20px; }
+      .body-text strong { color: white; }
+      .body-text .accent { color: var(--gold); font-weight: 600; }
+      .body-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 13px; color: rgba(138,154,181,0.8); line-height: 1.9; margin-bottom: 24px; font-style: italic; border-left: 2px solid rgba(240,180,41,0.3); padding-left: 14px; }
+      hr.divider { border: none; border-top: 1px solid var(--gold-border); margin: 44px 0; }
+      .hero { text-align: center; margin-bottom: 40px; }
+      .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+      .hero-title { font-size: clamp(30px, 4.5vw, 48px); font-weight: 900; line-height: 1.1; margin-bottom: 10px; }
+      .hero-title .accent { background: linear-gradient(135deg, var(--gold), #ff9500); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+      .hero-title-zh { font-family: 'Noto Sans TC', sans-serif; font-size: clamp(18px, 2.5vw, 26px); font-weight: 700; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
+      .hero-sub { font-size: 15px; color: var(--gray); max-width: 620px; margin: 0 auto; line-height: 1.75; }
+      .hero-sub-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: rgba(138,154,181,0.6); max-width: 580px; margin: 8px auto 0; line-height: 1.85; }
+      .raise-box {
+        background: linear-gradient(135deg, rgba(240,180,41,0.12), rgba(255,149,0,0.08));
+        border: 1px solid rgba(240,180,41,0.4);
+        border-radius: 18px; padding: 28px 36px; margin: 28px 0;
+        display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+      }
+      .raise-item { text-align: center; }
+      .raise-num { font-size: 36px; font-weight: 900; background: linear-gradient(135deg, var(--gold), #ff9500); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
+      .raise-label { font-size: 11px; color: var(--gray); margin-top: 4px; letter-spacing: 0.5px; }
+      .raise-label-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 10px; color: rgba(138,154,181,0.55); }
+      .metrics-row {
+        display: grid; grid-template-columns: repeat(4, 1fr);
+        gap: 1px; background: var(--card-border);
+        border: 1px solid var(--card-border); border-radius: 14px; overflow: hidden; margin: 28px 0;
+      }
+      .metric-cell { background: var(--navy2); padding: 20px 16px; text-align: center; }
+      .metric-num {
+        font-size: 28px; font-weight: 900;
+        background: linear-gradient(135deg, var(--gold), var(--cyan));
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 5px;
+      }
+      .metric-label { font-size: 11px; color: var(--gray); }
+      .metric-label-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 10px; color: rgba(138,154,181,0.5); margin-top: 2px; }
+      .section-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; margin-top: 32px; }
+      .section-title .gold { color: var(--gold); }
+      .section-title-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 14px; color: var(--gold); margin-bottom: 14px; opacity: 0.8; }
+      .five-col { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0; }
+      .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+      .card {
+        background: var(--card-bg); border: 1px solid var(--card-border);
+        border-radius: 12px; padding: 20px; transition: border-color 0.2s;
+      }
+      .card:hover { border-color: rgba(240,180,41,0.4); }
+      .card.gold-card { border-color: rgba(240,180,41,0.25); background: rgba(240,180,41,0.04); }
+      .card-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+      .card-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+      .card-title-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 11px; color: var(--gold); margin-bottom: 8px; opacity: 0.8; }
+      .card-body { font-size: 12px; color: var(--gray); line-height: 1.6; }
+      .card-num { font-size: 22px; font-weight: 900; color: var(--gold); margin-bottom: 4px; }
+      .tier-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 20px 0; }
+      .tier-table thead th { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--gold-border); }
+      .tier-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.15s; }
+      .tier-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+      .tier-table tbody td { padding: 13px 14px; color: var(--gray); vertical-align: middle; }
+      .tier-table tbody td:first-child { color: white; font-weight: 700; }
+      .badge { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 10px; font-weight: 700; }
+      .badge-gold { background: rgba(240,180,41,0.15); color: var(--gold); border: 1px solid rgba(240,180,41,0.3); }
+      .badge-cyan { background: rgba(0,200,255,0.1); color: var(--cyan); border: 1px solid rgba(0,200,255,0.25); }
+      .badge-green { background: rgba(0,229,200,0.1); color: var(--teal); border: 1px solid rgba(0,229,200,0.25); }
+      .why-now {
+        background: linear-gradient(135deg, rgba(26,106,255,0.1), rgba(0,229,200,0.06));
+        border: 1px solid rgba(0,200,255,0.25);
+        border-radius: 16px; padding: 28px 32px; margin: 24px 0;
+      }
+      .why-now-title { font-size: 17px; font-weight: 800; margin-bottom: 16px; }
+      .why-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+      .why-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+      .why-text { font-size: 14px; color: rgba(255,255,255,0.82); line-height: 1.6; }
+      .why-text-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: rgba(138,154,181,0.7); margin-top: 2px; }
+      .cta-box {
+        background: linear-gradient(135deg, rgba(240,180,41,0.12), rgba(255,149,0,0.08));
+        border: 1px solid rgba(240,180,41,0.4);
+        border-radius: 18px; padding: 36px 40px; text-align: center; margin: 36px 0;
+        position: relative; overflow: hidden;
+      }
+      .cta-box::before {
+        content: ''; position: absolute; top:-50%; left:-50%;
+        width: 200%; height: 200%;
+        background: radial-gradient(ellipse at center, rgba(240,180,41,0.05) 0%, transparent 70%);
+      }
+      .cta-big { font-size: 24px; font-weight: 900; margin-bottom: 4px; position: relative; }
+      .cta-big-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 16px; color: var(--gold); margin-bottom: 16px; position: relative; }
+      .cta-detail { font-size: 14px; color: var(--gray); line-height: 1.75; position: relative; max-width: 600px; margin: 0 auto; }
+      .cta-detail-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: rgba(138,154,181,0.7); margin-top: 8px; position: relative; }
+      .sign-block { margin-top: 40px; }
+      .sign-name { font-size: 18px; font-weight: 700; }
+      .sign-title { font-size: 13px; color: var(--gray); margin-top: 3px; }
+      .sign-title-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: rgba(138,154,181,0.7); }
+      .sign-contact { font-size: 13px; color: var(--gold); margin-top: 6px; }
+      .footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--gold-border); display: flex; justify-content: space-between; }
+      .footer div { font-size: 11px; color: rgba(255,255,255,0.18); line-height: 1.7; }
+      .footer div:last-child { text-align: right; }
+      body.zh-mode .zh-sub { display: block !important; }
+      body:not(.zh-mode) .zh-only { display: none !important; }
+      .zh-sub { display: block; }
+    </style>
+</head>
+<body class="antigravity-scroll-lock">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btnZH" onclick="setLang('zh')">繁中</button>
+    </div>
+    <div class="bg-glow g1"></div>
+    <div class="bg-glow g2"></div>
+    <div class="bg-glow g3"></div>
+    <div class="page">
+      <div class="letterhead">
+        <div>
+          <div class="logo-text">TITAN SIGNAL</div>
+          <div class="logo-sub">AI Foundry · Private Placement</div>
+        </div>
+        <div class="letterhead-right">
+          <div class="conf">🔒 Private & Confidential · 私人機密</div><br>
+          March 2026 · 2026年3月<br>
+          titansignal.io
+        </div>
+      </div>
+      <div class="to-block">
+        <div class="to-label">Personal Introduction · 私人介紹</div>
+        <div class="to-name">Mr. Chen Kuo-Ho · 陳國和先生</div>
+        <div class="to-title">Chairman · Jih Sun International Leasing & Jih Sun Securities Investment Trust<br>
+        日盛國際租賃 / 日盛投信 董事長</div>
+      </div>
+      <div class="salutation">Dear Chairman Chen,</div>
+      <div class="salutation-zh zh-sub">尊敬的陳董事長，</div>
+      <p class="body-text">
+        Given our <span class="accent">family connection</span>, I am sharing this private placement opportunity before it is presented to the broader institutional market. Titan Signal AI Foundry is building the autonomous AI infrastructure layer for the next decade of finance — and I believe you are exactly the kind of strategic partner who would recognize this opportunity early.
+      </p>
+      <p class="body-zh zh-sub">
+        基於我們的家族關係，我在向更廣泛的機構市場介紹之前，先與您分享這個私人投資機會。Titan Signal AI Foundry 正在構建未來十年金融領域的自主 AI 基礎設施層——我相信您正是能夠及早識別這一機會的戰略合作夥伴。
+      </p>
+      <p class="body-text">
+        With your decades of experience building Taiwan's securities and banking infrastructure, you understand better than most how <strong>technology transforms financial institutions.</strong> Titan Signal is that transformation — already alive, already generating revenue across 5 non-correlated income streams.
+      </p>
+      <p class="body-zh zh-sub">
+        憑借您數十年建設台灣証券和銀行基礎設施的經驗，您比任何人都更清楚<strong>科技如何改變金融機構。</strong>Titan Signal 就是這種轉變——已經在運行，已經通過5個非相關收入來源創造收益。
+      </p>
+      <hr class="divider">
+      <div class="hero">
+        <div class="eyebrow">Private Investment Round · 私人投資輪次</div>
+        <h1 class="hero-title">The <span class="accent">$120M</span> AI Foundry<br>You Can Get Into Early</h1>
+        <div class="hero-title-zh zh-sub">您可以提前進入的 $1.2億美元 AI 鑄造廠</div>
+        <p class="hero-sub">Titan Signal is raising $12M at a $120M valuation — a combination of equity and token liquidity — to dominate the autonomous AI infrastructure market across trading, lead intelligence, mobile, and financial services.</p>
+        <p class="hero-sub-zh zh-sub">Titan Signal 正在以 1.2億美元估值募集 1,200萬美元 — 股權與代幣流動性的組合 — 以主導跨越交易、情報、移動端和金融服務的自主 AI 基礎設施市場。</p>
+      </div>
+      <div class="raise-box">
+        <div class="raise-item">
+          <div class="raise-num">$12M</div>
+          <div class="raise-label">Raise Target · 募資目標</div>
+          <div class="raise-label-zh">本輪募資</div>
+        </div>
+        <div class="raise-item">
+          <div class="raise-num">$120M</div>
+          <div class="raise-label">Valuation · 估值</div>
+          <div class="raise-label-zh">公司估值</div>
+        </div>
+        <div class="raise-item">
+          <div class="raise-num">5</div>
+          <div class="raise-label">Revenue Streams · 收入來源</div>
+          <div class="raise-label-zh">非相關收入流</div>
+        </div>
+        <div class="raise-item">
+          <div class="raise-num">230+</div>
+          <div class="raise-label">Live AI Daemons · 運行中AI</div>
+          <div class="raise-label-zh">24/7自主AI系統</div>
+        </div>
+        <div class="raise-item">
+          <div class="raise-num">33</div>
+          <div class="raise-label">Mobile Apps · 移動應用</div>
+          <div class="raise-label-zh">Google Play 上線中</div>
+        </div>
+      </div>
+      <div class="section-title">5 Non-Correlated <span class="gold">Revenue Engines</span></div>
+      <div class="section-title-zh zh-sub">5個非相關收入引擎 — 每個獨立盈利</div>
+      <div class="five-col">
+        <div class="card gold-card">
+          <span class="card-icon">📈</span>
+          <div class="card-title">Algorithmic Trading</div>
+          <div class="card-title-zh zh-sub">量化交易</div>
+          <div class="card-num">23</div>
+          <div class="card-body">Pairs. 77 bots. Sub-14ms execution. 24/7.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">🎯</span>
+          <div class="card-title">Apex Leads Pro</div>
+          <div class="card-title-zh zh-sub">AI商業情報</div>
+          <div class="card-num">92K+</div>
+          <div class="card-body">Leads harvested. $1.50–$5 per lead sold.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">⚡</span>
+          <div class="card-title">Signal Subscriptions</div>
+          <div class="card-title-zh zh-sub">信號訂閱</div>
+          <div class="card-num">$497</div>
+          <div class="card-body">Lifetime key. $97/mo retail. $4,999 enterprise API.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">🎮</span>
+          <div class="card-title">iGaming & Affiliates</div>
+          <div class="card-title-zh zh-sub">電子博弈聯盟</div>
+          <div class="card-num">CPA</div>
+          <div class="card-body">Systematic affiliate harvesting across gaming operators.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">📱</span>
+          <div class="card-title">Mobile AI Apps</div>
+          <div class="card-title-zh zh-sub">AI移動應用</div>
+          <div class="card-num">33+</div>
+          <div class="card-body">Published on Google Play. Wave 1 global expansion.</div>
+        </div>
+      </div>
+      <div class="why-now">
+        <div class="why-now-title">⏰ Why This Round, Why Now · 為什麼是現在</div>
+        <div class="why-item">
+          <div class="why-dot"></div>
+          <div>
+            <div class="why-text"><strong>Pre-institutional pricing.</strong> We are presenting to institutional VCs next. Family and strategic partners get access at current terms before the round closes.</div>
+            <div class="why-text-zh">機構定價前的機會。我們下一步將向機構風投介紹。家族和戰略合作夥伴在輪次結束前以當前條款獲得準入。</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-dot"></div>
+          <div>
+            <div class="why-text"><strong>AI infrastructure is the new semiconductor.</strong> TSMC won by owning the physical layer. Titan Signal is building the autonomous intelligence layer — across trading, finance, and mobile.</div>
+            <div class="why-text-zh">AI基礎設施是新的半導體。台積電通過擁有物理層獲勝。Titan Signal 正在構建自主智能層 — 橫跨交易、金融和移動端。</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-dot"></div>
+          <div>
+            <div class="why-text"><strong>Already generating revenue.</strong> This is not a projection — Titan Signal's fleet is live, trading daily, and the outreach engine runs 5,300+ emails/day autonomously.</div>
+            <div class="why-text-zh">已在創造收益。這不是預測——Titan Signal 的艦隊已上線，每日交易，外展引擎每天自主發送 5,300+ 封電子郵件。</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-dot"></div>
+          <div>
+            <div class="why-text"><strong>Your financial network = distribution leverage.</strong> A strategic investment from a family of Taiwan's financial leadership accelerates our Asia regional expansion dramatically.</div>
+            <div class="why-text-zh">您的金融網絡 = 分銷槓桿。來自台灣金融領導家族的戰略投資極大加速了我們的亞洲區域擴張。</div>
+          </div>
+        </div>
+      </div>
+      <div class="section-title">Private Placement <span class="gold">Tiers</span></div>
+      <div class="section-title-zh zh-sub">私人配售層次 — 家族投資人優先條款</div>
+      <table class="tier-table">
+        <thead>
+          <tr>
+            <th>Tier · 層次</th>
+            <th>Minimum · 最低投資</th>
+            <th>Equity · 股權</th>
+            <th>Perks · 特權</th>
+            <th>Status · 狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🥇 Founding Partner<br><small style="color:#8a9ab5;font-family:'Noto Sans TC'">創始合夥人</small></td>
+            <td>$1M+</td>
+            <td>~0.85%+</td>
+            <td>Board observer, co-branding rights, Asia region revenue share</td>
+            <td><span class="badge badge-gold">Open · 開放</span></td>
+          </tr>
+          <tr>
+            <td>⭐ Strategic Investor<br><small style="color:#8a9ab5;font-family:'Noto Sans TC'">戰略投資人</small></td>
+            <td>$250K–$1M</td>
+            <td>~0.2%–0.85%</td>
+            <td>Quarterly briefings, Enterprise API access, co-investment rights</td>
+            <td><span class="badge badge-cyan">Open · 開放</span></td>
+          </tr>
+          <tr>
+            <td>💎 Angel Partner<br><small style="color:#8a9ab5;font-family:'Noto Sans TC'">天使合夥人</small></td>
+            <td>$50K–$250K</td>
+            <td>~0.05%–0.2%</td>
+            <td>Annual report, signal API access, affiliate program</td>
+            <td><span class="badge badge-green">Open · 開放</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="section-title">The <span class="gold">Asia Advantage</span> — Why Your Network Changes Everything</div>
+      <div class="section-title-zh zh-sub">亞洲優勢 — 為何您的網絡改變一切</div>
+      <div class="two-col">
+        <div class="card gold-card">
+          <span class="card-icon">🏦</span>
+          <div class="card-title">Financial Services Distribution</div>
+          <div class="card-title-zh zh-sub">金融服務分銷</div>
+          <div class="card-body">Your existing relationships in Taiwan's securities and banking sector provide instant access to enterprise AI clients — valued at $10K–$50K/engagement. A single warm introduction outperforms 10,000 cold emails.</div>
+        </div>
+        <div class="card gold-card">
+          <span class="card-icon">🌏</span>
+          <div class="card-title">Asia Regional Expansion</div>
+          <div class="card-title-zh zh-sub">亞洲區域擴張</div>
+          <div class="card-body">Our Wave 1 mobile strategy targets high-mobile-adoption markets: Vietnam, Philippines, Indonesia, Taiwan. Your network accelerates market entry and regulatory credibility in each jurisdiction.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">📊</span>
+          <div class="card-title">Investment Trust AI Layer</div>
+          <div class="card-title-zh zh-sub">投信AI應用層</div>
+          <div class="card-body">Jih Sun Investment Trust manages NT$100B+ in AUM. Titan Signal's demand forecasting and signal infrastructure can be licensed directly — creating a revenue relationship that grows with your AUM.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">🔁</span>
+          <div class="card-title">Revenue Co-Participation</div>
+          <div class="card-title-zh zh-sub">收益共同參與</div>
+          <div class="card-body">Founding Partners participate in Asia-originated revenue. Every client your network brings to Titan Signal generates a rev-share allocation back to the referring strategic partner.</div>
+        </div>
+      </div>
+      <div class="cta-box">
+        <div class="cta-big">Let's Discuss This Week · 本週讓我們討論</div>
+        <div class="cta-big-zh zh-sub">在正式路演前，優先為您保留配額</div>
+        <div class="cta-detail">
+          I am reserving a Founding Partner allocation for you before we open this round to the institutional pipeline. A 30-minute conversation is all we need to explore whether this aligns with where you want to deploy capital in 2026.
+        </div>
+        <div class="cta-detail-zh zh-sub">
+          在我們向機構管道開放此輪之前，我為您保留了創始合夥人配額。只需30分鐘的對話，我們就能探討這是否符合您2026年的資本配置方向。
+        </div>
+      </div>
+      <div class="sign-block">
+        <div class="sign-name">Gary Chen · 陳家瑋</div>
+        <div class="sign-title">Founder & Chief Executive Officer</div>
+        <div class="sign-title-zh zh-sub">創辦人兼執行長</div>
+        <div class="sign-title">Titan Signal AI Foundry</div>
+        <div class="sign-contact">gary@titansignal.io · titansignal.io</div>
+      </div>
+      <div class="footer">
+        <div>TITAN SIGNAL AI FOUNDRY · PRIVATE & CONFIDENTIAL · 私人機密<br>專為陳國和先生個人審閱製作 · Prepared exclusively for Mr. Chen Kuo-Ho</div>
+        <div>March 2026 · 2026年3月<br>$12M Raise · $120M Valuation</div>
+      </div>
+    </div>
+    <script>
+    function setLang(lang) {
+      if (lang === 'zh') {
+        document.body.classList.add('zh-mode');
+        document.getElementById('btnZH').classList.add('active');
+        document.getElementById('btnEN').classList.remove('active');
+      } else {
+        document.body.classList.remove('zh-mode');
+        document.getElementById('btnEN').classList.add('active');
+        document.getElementById('btnZH').classList.remove('active');
+      }
+    }
+    </script>
+</body>
+</html>
