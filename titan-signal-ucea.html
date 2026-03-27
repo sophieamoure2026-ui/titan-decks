@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Titan Signal — UCEA Capital Partners</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #F5F7FA; color: #1A1F2E; padding: 2.5rem; }
+    .page { max-width: 900px; margin: 0 auto; background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 32px rgba(0,0,0,0.08); }
+
+    /* HEADER */
+    .header { background: #0D1117; padding: 2.5rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.6rem; font-weight: 900; letter-spacing: 0.06em; color: #fff; }
+    .logo span { color: #4F8EF7; }
+    .header-right { text-align: right; }
+    .conf-label { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: #4F8EF7; }
+    .header-sub { font-size: 0.82rem; color: #9AA5B8; margin-top: 4px; }
+
+    /* SECTION */
+    .body { padding: 2.5rem 3rem; }
+    .section { margin-bottom: 2rem; }
+    .section-tag { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: #4F8EF7; font-weight: 700; margin-bottom: 0.5rem; }
+    .section-title { font-size: 1.4rem; font-weight: 800; color: #0D1117; line-height: 1.3; margin-bottom: 0.8rem; }
+    .section-body { font-size: 0.88rem; color: #4A5568; line-height: 1.75; }
+
+    /* CARDS */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1.2rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.2rem; }
+    .card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 1.4rem; }
+    .card-label { font-size: 0.58rem; letter-spacing: 0.24em; text-transform: uppercase; color: #4F8EF7; font-weight: 700; margin-bottom: 0.5rem; }
+    .card-title { font-size: 1.05rem; font-weight: 800; color: #0D1117; margin-bottom: 0.5rem; }
+    .card-body { font-size: 0.8rem; color: #5A6A8A; line-height: 1.6; }
+
+    /* METRICS ROW */
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.2rem; }
+    .metric { background: #0D1117; border-radius: 10px; padding: 1.2rem; text-align: center; }
+    .metric-val { font-size: 1.5rem; font-weight: 900; color: #fff; }
+    .metric-val span { color: #4F8EF7; }
+    .metric-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: #5A6A8A; margin-top: 4px; }
+
+    /* ALIGNMENT TABLE */
+    .align-table { width: 100%; border-collapse: collapse; margin-top: 1.2rem; font-size: 0.82rem; }
+    .align-table th { text-align: left; padding: 0.6rem 0.8rem; background: #0D1117; color: #9AA5B8; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; }
+    .align-table td { padding: 0.75rem 0.8rem; border-bottom: 1px solid #E2E8F0; color: #2D3748; vertical-align: top; }
+    .align-table tr:last-child td { border-bottom: none; }
+    .align-table td:first-child { font-weight: 600; color: #0D1117; width: 28%; }
+    .tick { color: #4F8EF7; font-weight: 700; margin-right: 4px; }
+
+    /* GEO */
+    .geo-row { display: flex; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap; }
+    .geo-pill { background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 20px; padding: 0.35rem 0.9rem; font-size: 0.74rem; font-weight: 600; color: #1E40AF; }
+    .geo-pill.live { background: #0D1117; border-color: #4F8EF7; color: #fff; }
+    .geo-pill.ucea { background: #FFF7ED; border-color: #FED7AA; color: #9A3412; }
+
+    /* RAISE */
+    .raise-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 1.2rem; }
+    .raise-card { border-radius: 10px; padding: 1.2rem 1.5rem; }
+    .raise-card.dark { background: #0D1117; }
+    .raise-card.mid { background: #1E2940; }
+    .raise-card.light { background: #F8FAFC; border: 1px solid #E2E8F0; }
+    .raise-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: #4F8EF7; margin-bottom: 6px; }
+    .raise-val { font-size: 1.3rem; font-weight: 900; color: #fff; }
+    .raise-val.dark-text { color: #0D1117; }
+    .raise-sub { font-size: 0.74rem; color: #5A6A8A; margin-top: 4px; }
+
+    /* FOOTER */
+    .footer { background: #F8FAFC; border-top: 1px solid #E2E8F0; padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-name { font-size: 0.88rem; font-weight: 700; color: #0D1117; }
+    .footer-contact { font-size: 0.74rem; color: #5A6A8A; }
+    .footer-conf { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: #9AA5B8; text-align: right; }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid #E2E8F0; margin: 2rem 0; }
+
+    @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      body { background: #fff !important; padding: 0 !important; font-size: 11px; }
+      .page { box-shadow: none !important; border: none !important; border-radius: 0 !important; max-width: 100% !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="logo">TITAN<span>SIGNAL</span></div>
+      <div style="font-size:0.7rem;color:#5A6A8A;margin-top:5px;letter-spacing:0.12em;">AI-NATIVE FINANCIAL INTELLIGENCE PLATFORM</div>
+    </div>
+    <div class="header-right">
+      <div class="conf-label">Prepared for</div>
+      <div style="font-size:1rem;font-weight:700;color:#fff;margin-top:3px;">UCEA Capital Partners</div>
+      <div class="header-sub">Confidential · March 2026</div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- OPPORTUNITY -->
+    <div class="section">
+      <p class="section-tag">The Opportunity</p>
+      <h2 class="section-title">Institutional-grade AI intelligence.<br/>Built for financial inclusion.</h2>
+      <p class="section-body">
+        The global copy-trading and AI signal market is projected to exceed $12B by 2028. Titan Signal is positioned at the intersection of UCEA's core investment thesis: <strong>Tech & Financial Inclusion</strong> — deploying AI infrastructure that gives retail investors, family offices, and sovereign institutions access to institutional-grade market intelligence for the first time.
+      </p>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- WHAT WE BUILT -->
+    <div class="section">
+      <p class="section-tag">Platform</p>
+      <h2 class="section-title">Three interlocked products.</h2>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-label">Layer 1</div>
+          <div class="card-title">AI Signal Mesh</div>
+          <div class="card-body">20-pair real-time signal network. Each asset pair monitored by a dedicated AI agent. A central arbitration layer makes the final call 24/7.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Layer 2 · Just Launched</div>
+          <div class="card-title">18 Legends</div>
+          <div class="card-body">Copy-trade platform running 18 live AI models — each named after and operating the documented strategy of a legendary investor. Buffett, Soros, Dalio, Simons and 14 others. $99–$2,499/month.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Layer 3 · Institutional</div>
+          <div class="card-title">Node Infrastructure</div>
+          <div class="card-body">Offshore crypto exchange runways engineered for sovereign-grade control. Designed specifically for family offices and institutional operators requiring full jurisdictional autonomy.</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- METRICS -->
+    <div class="section">
+      <p class="section-tag">Traction</p>
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-val">20<span>+</span></div>
+          <div class="metric-label">AI Pairs Live</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">18</div>
+          <div class="metric-label">Legend Models</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">3</div>
+          <div class="metric-label">Markets Active</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">Q4<span>'26</span></div>
+          <div class="metric-label">London Launch</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- ALIGNMENT -->
+    <div class="section">
+      <p class="section-tag">Alignment with UCEA</p>
+      <h2 class="section-title">Why this is your deal.</h2>
+      <table class="align-table">
+        <tr>
+          <th>UCEA Focus</th>
+          <th>Titan Signal Position</th>
+        </tr>
+        <tr>
+          <td>Tech & Financial Inclusion</td>
+          <td><span class="tick">✦</span>AI-powered access to institutional strategies for retail and private wealth. Democratising intelligence that was previously exclusive to hedge funds.</td>
+        </tr>
+        <tr>
+          <td>Family Office Infrastructure</td>
+          <td><span class="tick">✦</span>Layer 3 Node infrastructure built specifically for family office-level sovereign exchange control — private, jurisdictionally flexible, institutional-grade.</td>
+        </tr>
+        <tr>
+          <td>Global Hubs</td>
+          <td><span class="tick">✦</span>We are live in markets where UCEA already operates: US, Taiwan (Asia-Pacific). Expanding to London Q4 2026. Aligned on Singapore, Dubai, Hong Kong pipeline.</td>
+        </tr>
+        <tr>
+          <td>Growth Stage · £5M–£50M</td>
+          <td><span class="tick">✦</span>Raising $12M at a $120M valuation. Live product, recurring revenue, three-region deployment. Fits squarely in UCEA's growth ticket range.</td>
+        </tr>
+      </table>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- GEOGRAPHY -->
+    <div class="section">
+      <p class="section-tag">Geographic Footprint</p>
+      <h2 class="section-title">Where we meet.</h2>
+      <div class="geo-row">
+        <span class="geo-pill live">🟢 United States · Live</span>
+        <span class="geo-pill live">🟢 Taiwan · Live</span>
+        <span class="geo-pill live">🟢 Japan · Live</span>
+        <span class="geo-pill">🔵 London · Q4 2026</span>
+        <span class="geo-pill">🔵 Singapore · Pipeline</span>
+        <span class="geo-pill">🔵 Dubai · Pipeline</span>
+        <span class="geo-pill">🔵 Hong Kong · Pipeline</span>
+        <span class="geo-pill ucea">📍 UCEA Active Hub</span>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- RAISE -->
+    <div class="section">
+      <p class="section-tag">The Raise</p>
+      <div class="raise-row">
+        <div class="raise-card dark">
+          <div class="raise-label">Raising</div>
+          <div class="raise-val">$12M</div>
+          <div class="raise-sub" style="color:#9AA5B8;">SAFE + Equity hybrid</div>
+        </div>
+        <div class="raise-card mid">
+          <div class="raise-label">Valuation</div>
+          <div class="raise-val">$120M</div>
+          <div class="raise-sub" style="color:#9AA5B8;">Pre-money, live revenue</div>
+        </div>
+        <div class="raise-card light">
+          <div class="raise-label">Use of Funds</div>
+          <div class="raise-val dark-text" style="font-size:0.88rem;line-height:1.5;">London launch · Institutional Node buildout · AI mesh expansion · Sales infrastructure</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>
+      <div class="footer-name">Gary Chen — Founder & CEO, Titan Signal</div>
+      <div class="footer-contact">gary@titansignal.io · titansignal.io</div>
+    </div>
+    <div class="footer-conf">
+      Confidential<br/>March 2026
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
